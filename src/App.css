@@ -36,3 +36,77 @@
     transform: rotate(360deg);
   }
 }
+
+.grid {
+  float: left;
+}
+
+.itemImage {
+  width: 300px;
+  position: absolute;
+  right: 100px;
+  top: 200px;
+  margin-top: 90px;
+}
+
+.exampleText {
+  text-align: center;
+  font-weight: bold;
+}
+
+.linkButton{
+  width: 150px;
+  position: absolute;
+  right: 65px;
+  top: 175px;
+}
+
+button {
+  /*background-color: #4CAF50; /* Green */
+  border-color: gray;
+  color: black;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.yaxisbutton {
+  width: 115px
+}
+
+.custom-tooltip{
+  background-color: rgb(120, 120, 119, 0.5);;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.seasonKey{
+  width: 500px;
+  margin: auto;
+}
+
+.itemViewKey {
+  position: absolute;
+  bottom: 50px;
+  left: 300px;
+}
+
+.keycircle{
+  width: 20px;
+  height: 20px;
+}
+
+.seasonText{
+  padding: 5px;
+  display: inline;
+}
