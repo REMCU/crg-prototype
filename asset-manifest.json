@@ -1,14 +1,18 @@
 {
   "files": {
-    "main.css": "/crg-prototype/static/css/main.425f69cf.css",
-    "main.js": "/crg-prototype/static/js/main.70518617.js",
+    "main.css": "/crg-prototype/static/css/main.488b20a1.css",
+    "main.js": "/crg-prototype/static/js/main.290a819e.js",
+    "static/media/Partwhole Item.png": "/crg-prototype/static/media/Partwhole Item.b94afadbb9b41792100c.png",
+    "static/media/Operation Item.png": "/crg-prototype/static/media/Operation Item.1ab2d5ccaceaaa955971.png",
+    "static/media/Quotient Item.png": "/crg-prototype/static/media/Quotient Item.c4bb65dd005b49b85f72.png",
+    "static/media/Measurement Item.png": "/crg-prototype/static/media/Measurement Item.45568d0f156af155ff3d.png",
     "static/media/logo.svg": "/crg-prototype/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/crg-prototype/index.html",
-    "main.425f69cf.css.map": "/crg-prototype/static/css/main.425f69cf.css.map",
-    "main.70518617.js.map": "/crg-prototype/static/js/main.70518617.js.map"
+    "main.488b20a1.css.map": "/crg-prototype/static/css/main.488b20a1.css.map",
+    "main.290a819e.js.map": "/crg-prototype/static/js/main.290a819e.js.map"
   },
   "entrypoints": [
-    "static/css/main.425f69cf.css",
-    "static/js/main.70518617.js"
+    "static/css/main.488b20a1.css",
+    "static/js/main.290a819e.js"
   ]
 }
