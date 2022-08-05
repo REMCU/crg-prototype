@@ -42,23 +42,35 @@
 }
 
 .itemImage {
-  width: 300px;
+  width: 350px;
   position: absolute;
   right: 100px;
   top: 200px;
-  margin-top: 90px;
 }
 
 .exampleText {
   text-align: center;
   font-weight: bold;
+  margin-top: 20px;
+}
+
+.levelName{
+    font-weight: bold;
+}
+
+.levelText{
+    text-align: center;
 }
 
 .linkButton{
   width: 150px;
   position: absolute;
-  right: 65px;
-  top: 175px;
+  right: 80px;
+  bottom:-50px;
+}
+
+.itempng {
+  margin-top: 20px;
 }
 
 button {

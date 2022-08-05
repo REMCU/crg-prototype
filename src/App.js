@@ -18,6 +18,14 @@ import {
 import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
 
+import pwitem from './images/Partwhole Item.png';
+// Quotient
+import qitem from './images/Quotient Item.png';
+// Measurement
+import mitem from './images/Measurement Item.png';
+// Operation
+import opitem from './images/Operation Item.png';
+
 
 
 // dropdown definitions
@@ -134,13 +142,13 @@ const lpLevelCutoffs = [418, 430, 449, 459, 469, 481, 494]
 // set file paths for items
 const lpLevelItems = new Map();
 // Part-Whole
-lpLevelItems.set(418, './images/Part-Whole Item.png')
+lpLevelItems.set(418, pwitem)
 // Quotient
-lpLevelItems.set(449, './images/Quotient Item.png')
+lpLevelItems.set(449, qitem)
 // Measurement
-lpLevelItems.set(469, './images/Measurement Item.png')
+lpLevelItems.set(469, mitem)
 // Operation
-lpLevelItems.set(494, './images/Operation Item.png')
+lpLevelItems.set(494, opitem)
 
 const lpLevels = [
   { level: 'Part-Whole', score: lpLevelCutoffs[0]},
@@ -453,18 +461,28 @@ function ScoreGridFullWithItem() {
     const itemDisplay = useSelector((state) => state.global.itemDisplay)
 
     var itemPath = "";
+    var levelText = "";
+    var levelName = "";
     switch (itemDisplay) {
       case "Measurement":
-        itemPath = "/images/Measurement%20Item.png";
+        itemPath = mitem;
+        levelName = "Level 3: Measurement";
+        levelText =  "Students understand fractions as occupying space on a number line. Students understand that fractions have additive properties, and that the relative size of one fraction compared to the other depends on the number of times the first fits into the second. Students can compare the size of fractions with different denominators, and perform addition/ subtraction with them.";
         break;
       case "Operation":
-        itemPath = "/images/Operation%20Item.png";
+        itemPath = opitem;
+        levelName = "Level 5: Operator";
+        levelText =  "Students use ratios as multipliers to find a proportional amount of an original value. Student may think of fractions as the multiplication of the numerator followed by the division of the denominator, or consider a fraction as a way to stretch or shrink a different value. Students must understand that multiplication can lead to the decrease in magnitude of a value.";
         break;
       case "Quotient":
-        itemPath = "/images/Quotient%20Item.png";
+        itemPath = qitem;
+        levelName = "Level 2: Quotient";
+        levelText =  "Students are able to engage in equipartitioning and the creation of ‘fair shares’. This level no longer requires students to divide one whole into parts. Students must be able to create groups of the same size and use all of the original whole. Students begin to realize that groups of different sizes may be formed, affecting the size of each piece.";
         break;
       default:
-        itemPath = "/images/Partwhole%20Item.png";
+        itemPath = pwitem;
+        levelName = "Level 1: Part-Whole";
+        levelText =  "Students understand fractions by thinking about a whole split into equal parts. This skill is foundational for further fraction understanding. Students may overgeneralize whole number operations and struggle to compare or add/subtract different fractions.";
     }
 
     return (
@@ -519,13 +537,25 @@ function ScoreGridFullWithItem() {
           </ResponsiveContainer>
         </div>
         <div className="itemImage">
-          <div className="exampleText">
-            Example item for {itemDisplay}:
+          <div className="levelText">
+            <text class="levelName">
+              {levelName}
+            </text>
+            <br/>
+            <text>
+              {levelText}
+            </text>
+            <br/>
           </div>
-          <img src={itemPath} alt="Example item" width="300" />
-          <button className="linkButton">
-            Suggested followup activity
-          </button>
+          <div className="exampleText">
+            Example item for {itemDisplay}
+          </div>
+          <div>
+            <img class="itempng" src={itemPath} alt="Example item" width="350" />
+            <button className="linkButton">
+              Suggested followup activity
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -657,10 +687,12 @@ function ScoreGridGradeWithItem() {
         <div className="exampleText">
           Placeholder for item for {itemDisplay}
         </div>
-        <img src="/images/Measurement%20Item.png" alt="Example item" width="300" height="150" />
-        <button className="linkButton">
-          Suggested followup activity
-        </button>
+        <div>
+          <img class="itempng" src={mitem} alt="Example item" width="300" height="150" />
+          <button className="linkButton">
+            Suggested followup activity
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -673,28 +705,50 @@ function StudentView(){
   const uncertainty = useSelector((state) => state.global.uncertainty)
 
   var itemPath = "";
+  var levelText = "";
+  var levelName = "";
   switch (itemDisplay) {
     case "Measurement":
-      itemPath = "/images/Measurement%20Item.png";
+      itemPath = mitem;
+      levelName = "Level 3: Measurement";
+      levelText =  "Students understand fractions as occupying space on a number line. Students understand that fractions have additive properties, and that the relative size of one fraction compared to the other depends on the number of times the first fits into the second. Students can compare the size of fractions with different denominators, and perform addition/ subtraction with them.";
       break;
     case "Operation":
-      itemPath = "/images/Operation%20Item.png";
+      itemPath = opitem;
+      levelName = "Level 5: Operator";
+      levelText =  "Students use ratios as multipliers to find a proportional amount of an original value. Student may think of fractions as the multiplication of the numerator followed by the division of the denominator, or consider a fraction as a way to stretch or shrink a different value. Students must understand that multiplication can lead to the decrease in magnitude of a value.";
       break;
     case "Quotient":
-      itemPath = "/images/Quotient%20Item.png";
+      itemPath = qitem;
+      levelName = "Level 2: Quotient";
+      levelText =  "Students are able to engage in equipartitioning and the creation of ‘fair shares’. This level no longer requires students to divide one whole into parts. Students must be able to create groups of the same size and use all of the original whole. Students begin to realize that groups of different sizes may be formed, affecting the size of each piece.";
       break;
     default:
-      itemPath = "/images/Partwhole%20Item.png";
+      itemPath = pwitem;
+      levelName = "Level 1: Part-Whole";
+      levelText =  "Students understand fractions by thinking about a whole split into equal parts. This skill is foundational for further fraction understanding. Students may overgeneralize whole number operations and struggle to compare or add/subtract different fractions.";
   }
 
   const studentViewItem = (itemDisplay !== "") ? (<div className="itemImage">
+    <div className="levelText">
+      <text class="levelName">
+        {levelName}
+      </text>
+      <br/>
+      <text>
+        {levelText}
+      </text>
+      <br/>
+    </div>
     <div className="exampleText">
       Example item for {itemDisplay}
     </div>
-    <img src={itemPath} alt="Example item" width="300" />
-    <button className="linkButton">
-      Suggested followup activity
-    </button>
+    <div>
+      <img class="itempng" src={itemPath} alt="Example item" width="350" />
+      <button className="linkButton">
+        Suggested followup activity
+      </button>
+    </div>
   </div>) : (<div/>)
 
   return (
