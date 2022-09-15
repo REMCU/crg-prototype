@@ -43,5 +43,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://remcu.github.io/crg-prototype"
+  "homepage": "https://remcu.github.io/crg-prototype",
+  "devDependencies": {
+    "html-loader": "^4.1.0"
+  }
 }

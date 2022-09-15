@@ -17,14 +17,16 @@ import {
 } from 'recharts';
 import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
-
+//PW
 import pwitem from './images/Partwhole Item.png';
 // Quotient
 import qitem from './images/Quotient Item.png';
 // Measurement
 import mitem from './images/Measurement Item.png';
-// Operation
+// import mfollowup from './files/followup_activities.js'
+// Operator
 import opitem from './images/Operation Item.png';
+import lpexpl from './files/Fraction conceptualizations learning progression.pdf'
 
 
 
@@ -154,7 +156,7 @@ const lpLevels = [
   { level: 'Part-Whole', score: lpLevelCutoffs[0]},
   { level: 'Quotient', score: lpLevelCutoffs[2]},
   { level: 'Measurement', score: lpLevelCutoffs[4]},
-  { level: 'Operation', score: lpLevelCutoffs[6]},
+  { level: 'Operator', score: lpLevelCutoffs[6]},
 
 ]
 
@@ -209,6 +211,10 @@ const renderGradeYAxisTick = ({ x, y, payload }) => {
   }
 
 };
+
+const downloadTxtFile = () => {
+    console.log("download logic goes here")
+}
 
 function Option(props)  {
   const dispatch = useDispatch();
@@ -400,7 +406,7 @@ function ScoreGridFull() {
   return (
     <div>
       <div className="title">
-        Learning Progression View
+        Learning Progression View <a href={lpexpl} download="Fractions LP" target='_blank'><button>?</button></a>
       </div>
       <div className="grid">
         <ResponsiveContainer classname="sgf" width={1300} height={600}>
@@ -467,22 +473,46 @@ function ScoreGridFullWithItem() {
       case "Measurement":
         itemPath = mitem;
         levelName = "Level 3: Measurement";
-        levelText =  "Students understand fractions as occupying space on a number line. Students understand that fractions have additive properties, and that the relative size of one fraction compared to the other depends on the number of times the first fits into the second. Students can compare the size of fractions with different denominators, and perform addition/ subtraction with them.";
+        levelText =  (
+          <ul>
+            <li>Students understand fractions as occupying space on a number line.</li>
+            <li>Students understand that fractions have additive properties, and that the relative size of one fraction compared to the other depends on the number of times the first fits into the second.</li>
+            <li>Students can compare the size of fractions with different denominators, and perform addition/ subtraction with them.</li>
+          </ul>
+        );
         break;
-      case "Operation":
+      case "Operator":
         itemPath = opitem;
-        levelName = "Level 5: Operator";
-        levelText =  "Students use ratios as multipliers to find a proportional amount of an original value. Student may think of fractions as the multiplication of the numerator followed by the division of the denominator, or consider a fraction as a way to stretch or shrink a different value. Students must understand that multiplication can lead to the decrease in magnitude of a value.";
+        levelName = "Level 4: Operator";
+        levelText =  (
+          <ul>
+            <li>Students use ratios as multipliers to find a proportional amount of an original value.</li>
+            <li>Student may think of fractions as the multiplication of the numerator followed by the division of the denominator, or consider a fraction as a way to stretch or shrink a different value.</li>
+            <li>Students must understand that multiplication can lead to the decrease in magnitude of a value.</li>
+          </ul>
+        );
         break;
       case "Quotient":
         itemPath = qitem;
         levelName = "Level 2: Quotient";
-        levelText =  "Students are able to engage in equipartitioning and the creation of ‘fair shares’. This level no longer requires students to divide one whole into parts. Students must be able to create groups of the same size and use all of the original whole. Students begin to realize that groups of different sizes may be formed, affecting the size of each piece.";
+        levelText =  (
+          <ul>
+            <li>Students are able to engage in equipartitioning and the creation of ‘fair shares’.</li>
+            <li>This level no longer requires students to divide one whole into parts. Students must be able to create groups of the same size and use all of the original whole.</li>
+            <li>Students begin to realize that groups of different sizes may be formed, affecting the size of each piece.</li>
+          </ul>
+        );
         break;
       default:
         itemPath = pwitem;
         levelName = "Level 1: Part-Whole";
-        levelText =  "Students understand fractions by thinking about a whole split into equal parts. This skill is foundational for further fraction understanding. Students may overgeneralize whole number operations and struggle to compare or add/subtract different fractions.";
+        levelText =  (
+          <ul>
+            <li>Students understand fractions by thinking about a whole split into equal parts.</li>
+            <li>This skill is foundational for further fraction understanding.</li>
+            <li>Students may overgeneralize whole number operations and struggle to compare or add/subtract different fractions.</li>
+          </ul>
+        );
     }
 
     return (
@@ -499,7 +529,7 @@ function ScoreGridFullWithItem() {
                 margin={{ top: 20, right: 90, bottom: 30, left: 30 }}
               >
                 <XAxis type="number" tickCount={25} dataKey="index" tick={renderCustomXAxisTick}
-                  label={{ value: 'Student', position: 'outsideBottom', dy: 30 }}
+                  label={{ value: 'Student Initials', position: 'outsideBottom', dy: 30 }}
                 />
                 <YAxis yAxisId="left" dataKey="score" domain={[400, 525]} ticks = {[400, 425, 450, 475, 500, 525]}
                   label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
@@ -537,6 +567,7 @@ function ScoreGridFullWithItem() {
           </ResponsiveContainer>
         </div>
         <div className="itemImage">
+          <button onClick = {() => dispatch(toggleItemView(""))}>X</button>
           <div className="levelText">
             <text class="levelName">
               {levelName}
@@ -552,7 +583,7 @@ function ScoreGridFullWithItem() {
           </div>
           <div>
             <img class="itempng" src={itemPath} alt="Example item" width="350" />
-            <button className="linkButton">
+            <button className="linkButton" onClick={downloadTxtFile} >
               Suggested followup activity
             </button>
           </div>
@@ -581,7 +612,7 @@ function ScoreGridGrade() {
                 margin={{ top: 20, right: 150, bottom: 30, left: 30 }}
               >
                 <XAxis type="number" tickCount={25} dataKey="index" tick={renderCustomXAxisTick}
-                  label={{ value: 'Student', position: 'outsideBottom', dy: 30 }}
+                  label={{ value: 'Student Initials', position: 'outsideBottom', dy: 30 }}
                 />
                 <YAxis yAxisId="left" dataKey="score" domain={[427, 500]} ticks = {[427, 443, 460, 473, 499]}
                   label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
@@ -645,7 +676,7 @@ function ScoreGridGradeWithItem() {
               margin={{ top: 20, right: 90, bottom: 30, left: 30 }}
             >
               <XAxis type="number" tickCount={25} dataKey="index" tick={renderCustomXAxisTick}
-                label={{ value: 'Student', position: 'outsideBottom', dy: 30 }}
+                label={{ value: 'Student Initials', position: 'outsideBottom', dy: 30 }}
               />
               <YAxis yAxisId="left" dataKey="score" domain={[427, 500]} ticks = {[427, 443, 460, 473, 499]}
                 label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
@@ -689,7 +720,7 @@ function ScoreGridGradeWithItem() {
         </div>
         <div>
           <img class="itempng" src={mitem} alt="Example item" width="300" height="150" />
-          <button className="linkButton">
+          <button className="linkButton" onClick={downloadTxtFile} >
             Suggested followup activity
           </button>
         </div>
@@ -711,45 +742,72 @@ function StudentView(){
     case "Measurement":
       itemPath = mitem;
       levelName = "Level 3: Measurement";
-      levelText =  "Students understand fractions as occupying space on a number line. Students understand that fractions have additive properties, and that the relative size of one fraction compared to the other depends on the number of times the first fits into the second. Students can compare the size of fractions with different denominators, and perform addition/ subtraction with them.";
+      levelText =  (
+        <ul>
+          <li>Students understand fractions as occupying space on a number line.</li>
+          <li>Students understand that fractions have additive properties, and that the relative size of one fraction compared to the other depends on the number of times the first fits into the second.</li>
+          <li>Students can compare the size of fractions with different denominators, and perform addition/ subtraction with them.</li>
+        </ul>
+      );
       break;
-    case "Operation":
+    case "Operator":
       itemPath = opitem;
-      levelName = "Level 5: Operator";
-      levelText =  "Students use ratios as multipliers to find a proportional amount of an original value. Student may think of fractions as the multiplication of the numerator followed by the division of the denominator, or consider a fraction as a way to stretch or shrink a different value. Students must understand that multiplication can lead to the decrease in magnitude of a value.";
+      levelName = "Level 4: Operator";
+      levelText =  (
+        <ul>
+          <li>Students use ratios as multipliers to find a proportional amount of an original value.</li>
+          <li>Student may think of fractions as the multiplication of the numerator followed by the division of the denominator, or consider a fraction as a way to stretch or shrink a different value.</li>
+          <li>Students must understand that multiplication can lead to the decrease in magnitude of a value.</li>
+        </ul>
+      );
       break;
     case "Quotient":
       itemPath = qitem;
       levelName = "Level 2: Quotient";
-      levelText =  "Students are able to engage in equipartitioning and the creation of ‘fair shares’. This level no longer requires students to divide one whole into parts. Students must be able to create groups of the same size and use all of the original whole. Students begin to realize that groups of different sizes may be formed, affecting the size of each piece.";
+      levelText =  (
+        <ul>
+          <li>Students are able to engage in equipartitioning and the creation of ‘fair shares’.</li>
+          <li>This level no longer requires students to divide one whole into parts. Students must be able to create groups of the same size and use all of the original whole.</li>
+          <li>Students begin to realize that groups of different sizes may be formed, affecting the size of each piece.</li>
+        </ul>
+      );
       break;
     default:
       itemPath = pwitem;
       levelName = "Level 1: Part-Whole";
-      levelText =  "Students understand fractions by thinking about a whole split into equal parts. This skill is foundational for further fraction understanding. Students may overgeneralize whole number operations and struggle to compare or add/subtract different fractions.";
-  }
+      levelText =  (
+        <ul>
+          <li>Students understand fractions by thinking about a whole split into equal parts.</li>
+          <li>This skill is foundational for further fraction understanding.</li>
+          <li>Students may overgeneralize whole number operations and struggle to compare or add/subtract different fractions.</li>
+        </ul>
+      );
+    }
 
-  const studentViewItem = (itemDisplay !== "") ? (<div className="itemImage">
-    <div className="levelText">
-      <text class="levelName">
-        {levelName}
-      </text>
-      <br/>
-      <text>
-        {levelText}
-      </text>
-      <br/>
+  const studentViewItem = (itemDisplay !== "") ? (
+    <div className="itemImage">
+      <button onClick = {() => dispatch(toggleItemView(""))}>X</button>
+      <div className="levelText">
+        <text class="levelName">
+          {levelName}
+        </text>
+        <br/>
+        <text>
+          {levelText}
+        </text>
+        <br/>
+      </div>
+      <div className="exampleText">
+        Example item for {itemDisplay}
+      </div>
+      <div>
+        <img class="itempng" src={itemPath} alt="Example item" width="350" />
+        <button className="linkButton" onClick={downloadTxtFile} >
+          Suggested followup activity
+        </button>
+      </div>
     </div>
-    <div className="exampleText">
-      Example item for {itemDisplay}
-    </div>
-    <div>
-      <img class="itempng" src={itemPath} alt="Example item" width="350" />
-      <button className="linkButton">
-        Suggested followup activity
-      </button>
-    </div>
-  </div>) : (<div/>)
+  ) : (<div/>)
 
   return (
     <div>
@@ -765,7 +823,7 @@ function StudentView(){
               margin={{ top: 20, right: 150, bottom: 30, left: 30 }}
             >
               <XAxis type="number" tickCount={9} dataKey="index" tick={renderStudentXAxisTick}
-                label={{ value: 'Occasion', position: 'outsideBottom', dy: 30 }}
+                label={{ value: 'Grade and Season', position: 'outsideBottom', dy: 30 }}
               />
               <YAxis yAxisId="left" dataKey="score" domain={[400, 525]} ticks = {[400, 425, 450, 475, 500, 525]}
                 label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
@@ -820,7 +878,7 @@ function Prototype() {
       <div className = "prototype">
         <div style={{width: '500px'}}>
           <button
-             aria-label="Switch to grade 4 view"
+             aria-label="Return to class view"
              onClick={() => dispatch(disableStudentView())}
              style={{width: '300px', position: 'absolute', left: '90px'}}
            >
@@ -831,7 +889,7 @@ function Prototype() {
           <StudentDropdown  />
         </div>
         <StudentView />
-        <div className="seasonKey">
+        <div className={itemDisplay==="" ? "seasonKey" : "seasonKey itemViewKey"}>
           <svg className="keycircle"><circle cx={10} cy={10} r={7} fill="#F55F02" stroke="gray" /></svg> <div className="seasonText"> Fall </div>
           <svg className="keycircle"><circle cx={10} cy={10} r={7} fill="#02A1F5" stroke="gray" /></svg> <div className="seasonText"> Winter </div>
           <svg className="keycircle"><circle cx={10} cy={10} r={7} fill="#97E909" stroke="gray" /></svg> <div className="seasonText"> Spring </div>
@@ -845,14 +903,14 @@ function Prototype() {
         return (
           <div className = "prototype">
             <div style={{width: '500px'}}>
-              <button
+              {/*<button
                  aria-label="Switch to grade 4 view"
                  onClick={() => dispatch(switchView())}
                  style={{width: '300px', position: 'absolute', left: '90px'}}
                >
                 Switch to grade 4 view
               </button>
-              <br/>
+              <br/>*/}
               <br/>
               <Dropdown  />
             </div>
@@ -870,14 +928,14 @@ function Prototype() {
         return (
           <div className = "prototype">
             <div style={{width: '500px'}}>
-              <button
+              {/*<button
                  aria-label="Switch to grade 4 view"
                  onClick={() => dispatch(switchView())}
                  style={{width: '300px', position: 'absolute', left: '90px'}}
                >
                 Switch to grade 4 view
               </button>
-              <br/>
+              <br/>*/}
               <br/>
               <Dropdown  />
             </div>

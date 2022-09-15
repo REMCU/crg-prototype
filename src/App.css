@@ -45,7 +45,7 @@
   width: 350px;
   position: absolute;
   right: 100px;
-  top: 200px;
+  top: 125px;
 }
 
 .exampleText {
@@ -121,4 +121,9 @@ button {
 .seasonText{
   padding: 5px;
   display: inline;
+}
+
+li {
+  padding: 5px;
+  margin-left: 5px;
 }
