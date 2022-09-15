@@ -518,7 +518,7 @@ function ScoreGridFullWithItem() {
     return (
       <div>
         <div className="title">
-          Learning Progression View
+          Learning Progression View <a href={lpexpl} download="Fractions LP" target='_blank'><button>?</button></a>
         </div>
         <div className="grid">
           <ResponsiveContainer classname="sgf" width={900} height={600}>
