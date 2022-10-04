@@ -9,7 +9,8 @@ export const stateSlice = createSlice({
     graderange: false,
     itemDisplay: "",
     studentView: false,
-    align: false
+    align: false,
+    studentOrdering: false
   },
   reducers: {
     switchView: (state) => {
@@ -27,6 +28,12 @@ export const stateSlice = createSlice({
       } else{
         state.itemDisplay = action.payload
       }
+    },
+    enableStudentOrdering: (state, action) => {
+        state.studentOrdering = true
+    },
+    disableStudentOrdering: (state, action) => {
+        state.studentOrdering = false
     },
     enableGrowth: (state) => {
       state.growth = true
@@ -70,7 +77,8 @@ export const stateSlice = createSlice({
 export const {
   switchView, toggleItemView, enableGrowth, enableUncertainty,
   disableGrowth, disableUncertainty, enableGradeRange, disableGradeRange,
-  enableStudentView, disableStudentView, enableAlign, disableAlign
+  enableStudentView, disableStudentView, enableAlign, disableAlign, enableStudentOrdering,
+  disableStudentOrdering
 } = stateSlice.actions
 
 export default stateSlice.reducer

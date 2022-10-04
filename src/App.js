@@ -7,7 +7,8 @@ import { Provider, useSelector, useDispatch } from 'react-redux'
 import store from './store'
 import {switchView, toggleItemView, enableGrowth, enableUncertainty,
 disableGrowth, disableUncertainty, enableGradeRange, disableGradeRange,
-enableStudentView, disableStudentView, enableAlign, disableAlign} from './stateslice'
+enableStudentView, disableStudentView, enableAlign, disableAlign, enableStudentOrdering,
+disableStudentOrdering} from './stateslice'
 import {
   ScatterChart, Scatter,
   ResponsiveContainer, AreaChart, Area,
@@ -34,7 +35,8 @@ import lpexpl from './files/Fraction conceptualizations learning progression.pdf
 const displayOptions = [
   { value: "growth", label: "Show Prior Scores" },
   { value: "uncertainty", label: "Show Score Uncertainty" },
-  { value: "graderange", label: "Show Grade 4 Score Range" }
+  { value: "graderange", label: "Show Grade 4 Score Range" },
+  { value: "scoreordering", label: "Order Students by Score" }
 ];
 
 const studentDisplayOptions = [
@@ -50,81 +52,81 @@ const viewOptions = [
 // create nine students to start
 // eventually will be filled with results from grade 2, 3, 4, fall/winter/spring
 const scoreData = [
-  { name: 'bg', score: 455, index: 0, season: "fall" },
-  { name: 'jr', score: 447, index: 1, season: "fall" },
-  { name: 'plo', score: 450, index: 2, season: "fall" },
-  { name: 'rk', score: 453, index: 3, season: "fall" },
-  { name: 'mf', score: 449, index: 4, season: "fall" },
-  { name: 'vg', score: 435, index: 5, season: "fall" },
-  { name: 'kg', score: 440, index: 6, season: "fall" },
-  { name: 'rt', score: 443, index: 7, season: "fall" },
-  { name: 'qm', score: 437, index: 8, season: "fall" },
-  { name: 'zp', score: 436, index: 9, season: "fall" },
-  { name: 'ps', score: 441, index: 10, season: "fall" },
-  { name: 'ly', score: 440, index: 11, season: "fall" },
-  { name: 'rw', score: 430, index: 12, season: "fall" },
-  { name: 'ub', score: 430, index: 13, season: "fall" },
-  { name: 'va', score: 432, index: 14, season: "fall" },
-  { name: 'xd', score: 423, index: 15, season: "fall" },
-  { name: 'lk', score: 426, index: 16, season: "fall" },
-  { name: 'mm', score: 427, index: 17, season: "fall" },
-  { name: 'gt', score: 420, index: 18, season: "fall" },
-  { name: 'sw', score: 420, index: 19, season: "fall" },
-  { name: 'do', score: 423, index: 20, season: "fall" },
-  { name: 'tbe', score: 422, index: 21, season: "fall" },
-  { name: 'rr', score: 422, index: 22, season: "fall" },
-  { name: 'bn', score: 411, index: 23, season: "fall" },
-  { name: 'my', score: 414, index: 24, season: "fall" },
-  { name: 'bg', score: 453, index: 0, season: "winter" },
-  { name: 'jr', score: 452, index: 1, season: "winter" },
-  { name: 'plo', score: 455, index: 2, season: "winter" },
-  { name: 'rk', score: 455, index: 3, season: "winter" },
-  { name: 'mf', score: 447, index: 4, season: "winter" },
-  { name: 'vg', score: 445, index: 5, season: "winter" },
-  { name: 'kg', score: 442, index: 6, season: "winter" },
-  { name: 'rt', score: 448, index: 7, season: "winter" },
-  { name: 'qm', score: 440, index: 8, season: "winter" },
-  { name: 'zp', score: 441, index: 9, season: "winter" },
-  { name: 'ps', score: 443, index: 10, season: "winter" },
-  { name: 'ly', score: 444, index: 11, season: "winter" },
-  { name: 'rw', score: 437, index: 12, season: "winter" },
-  { name: 'ub', score: 437, index: 13, season: "winter" },
-  { name: 'va', score: 434, index: 14, season: "winter" },
-  { name: 'xd', score: 428, index: 15, season: "winter" },
-  { name: 'lk', score: 430, index: 16, season: "winter" },
-  { name: 'mm', score: 429, index: 17, season: "winter" },
-  { name: 'gt', score: 423, index: 18, season: "winter" },
-  { name: 'sw', score: 426, index: 19, season: "winter" },
-  { name: 'do', score: 426, index: 20, season: "winter" },
-  { name: 'tbe', score: 425, index: 21, season: "winter" },
-  { name: 'rr', score: 420, index: 22, season: "winter" },
-  { name: 'bn', score: 419, index: 23, season: "winter" },
-  { name: 'my', score: 418, index: 24, season: "winter" },
-  { name: 'bg', score: 475, index: 0, season: "spring" },
-  { name: 'jr', score: 472, index: 1, season: "spring" },
-  { name: 'plo', score: 472, index: 2, season: "spring" },
-  { name: 'rk', score: 470, index: 3, season: "spring" },
-  { name: 'mf', score: 466, index: 4, season: "spring" },
-  { name: 'vg', score: 465, index: 5, season: "spring" },
-  { name: 'kg', score: 464, index: 6, season: "spring" },
-  { name: 'rt', score: 464, index: 7, season: "spring" },
-  { name: 'qm', score: 460, index: 8, season: "spring" },
-  { name: 'zp', score: 459, index: 9, season: "spring" },
-  { name: 'ps', score: 457, index: 10, season: "spring" },
-  { name: 'ly', score: 455, index: 11, season: "spring" },
-  { name: 'rw', score: 453, index: 12, season: "spring" },
-  { name: 'ub', score: 450, index: 13, season: "spring" },
-  { name: 'va', score: 450, index: 14, season: "spring" },
-  { name: 'xd', score: 447, index: 15, season: "spring" },
-  { name: 'lk', score: 444, index: 16, season: "spring" },
-  { name: 'mm', score: 443, index: 17, season: "spring" },
-  { name: 'gt', score: 442, index: 18, season: "spring" },
-  { name: 'sw', score: 442, index: 19, season: "spring" },
-  { name: 'do', score: 441, index: 20, season: "spring" },
-  { name: 'tbe', score: 440, index: 21, season: "spring" },
-  { name: 'rr', score: 436, index: 22, season: "spring" },
-  { name: 'bn', score: 435, index: 23, season: "spring" },
-  { name: 'my', score: 434, index: 24, season: "spring" },
+  { name: 'bg', score: 455, index: 24, season: "fall", alph: 5, level: "Quotient" },
+  { name: 'jr', score: 447, index: 23, season: "fall", alph: 16, level: "Transition PW -> Q" },
+  { name: 'plo', score: 450, index: 22, season: "fall", alph: 10, level: "Quotient" },
+  { name: 'rk', score: 453, index: 21, season: "fall", alph: 9, level: "Quotient" },
+  { name: 'mf', score: 449, index: 20, season: "fall", alph: 4, level: "Quotient" },
+  { name: 'vg', score: 435, index: 19, season: "fall", alph: 7, level: "Transition PW -> Q" },
+  { name: 'kg', score: 440, index: 18, season: "fall", alph: 6, level: "Transition PW -> Q"  },
+  { name: 'rt', score: 443, index: 17, season: "fall", alph: 20, level: "Transition PW -> Q"  },
+  { name: 'qm', score: 437, index: 16, season: "fall", alph: 12, level: "Transition PW -> Q"  },
+  { name: 'zp', score: 436, index: 15, season: "fall", alph: 15, level: "Transition PW -> Q"  },
+  { name: 'ps', score: 441, index: 14, season: "fall", alph: 18, level: "Transition PW -> Q"  },
+  { name: 'ly', score: 440, index: 13, season: "fall", alph: 23, level: "Transition PW -> Q"  },
+  { name: 'rw', score: 430, index: 12, season: "fall", alph: 21, level: "Part-Whole" },
+  { name: 'ub', score: 430, index: 11, season: "fall", alph: 1, level: "Part-Whole" },
+  { name: 'va', score: 432, index: 10, season: "fall", alph: 0, level: "Transition PW -> Q" },
+  { name: 'xd', score: 423, index: 9, season: "fall", alph: 3, level: "Part-Whole" },
+  { name: 'lk', score: 426, index: 8, season: "fall", alph: 8, level: "Part-Whole" },
+  { name: 'mm', score: 427, index: 7, season: "fall", alph: 11, level: "Part-Whole" },
+  { name: 'gt', score: 420, index: 6, season: "fall", alph: 19, level: "Part-Whole" },
+  { name: 'sw', score: 420, index: 5, season: "fall", alph: 22, level: "Part-Whole" },
+  { name: 'do', score: 423, index: 4, season: "fall", alph: 14, level: "Part-Whole" },
+  { name: 'tbe', score: 422, index: 3, season: "fall", alph: 2, level: "Part-Whole" },
+  { name: 'rr', score: 422, index: 2, season: "fall", alph: 17, level: "Part-Whole" },
+  { name: 'bn', score: 411, index: 1, season: "fall", alph: 13, level: "pre-Part-Whole" },
+  { name: 'my', score: 414, index: 0, season: "fall", alph: 24, level: "pre-Part-Whole" },
+  { name: 'bg', score: 453, index: 24, season: "winter", alph: 5, level: "Quotient"  },
+  { name: 'jr', score: 452, index: 23, season: "winter", alph: 16, level: "Quotient" },
+  { name: 'plo', score: 455, index: 22, season: "winter", alph: 10, level: "Quotient" },
+  { name: 'rk', score: 455, index: 21, season: "winter", alph: 9, level: "Quotient" },
+  { name: 'mf', score: 447, index: 20, season: "winter", alph: 4, level: "Transition PW -> Q" },
+  { name: 'vg', score: 445, index: 19, season: "winter", alph: 7, level: "Transition PW -> Q" },
+  { name: 'kg', score: 442, index: 18, season: "winter", alph: 6, level: "Transition PW -> Q" },
+  { name: 'rt', score: 448, index: 17, season: "winter", alph: 20, level: "Transition PW -> Q" },
+  { name: 'qm', score: 440, index: 16, season: "winter", alph: 12, level: "Transition PW -> Q" },
+  { name: 'zp', score: 441, index: 15, season: "winter", alph: 15, level: "Transition PW -> Q" },
+  { name: 'ps', score: 443, index: 14, season: "winter", alph: 18, level: "Transition PW -> Q" },
+  { name: 'ly', score: 444, index: 13, season: "winter", alph: 23, level: "Transition PW -> Q" },
+  { name: 'rw', score: 437, index: 12, season: "winter", alph: 21, level: "Transition PW -> Q" },
+  { name: 'ub', score: 437, index: 11, season: "winter", alph: 1, level: "Transition PW -> Q" },
+  { name: 'va', score: 434, index: 10, season: "winter", alph: 0, level: "Transition PW -> Q" },
+  { name: 'xd', score: 428, index: 9, season: "winter", alph: 3, level: "Part-Whole" },
+  { name: 'lk', score: 430, index: 8, season: "winter", alph: 8, level: "Part-Whole" },
+  { name: 'mm', score: 429, index: 7, season: "winter", alph: 11, level: "Part-Whole" },
+  { name: 'gt', score: 423, index: 6, season: "winter", alph: 19, level: "Part-Whole" },
+  { name: 'sw', score: 426, index: 5, season: "winter", alph: 22, level: "Part-Whole" },
+  { name: 'do', score: 426, index: 4, season: "winter", alph: 14, level: "Part-Whole" },
+  { name: 'tbe', score: 425, index: 3, season: "winter", alph: 2, level: "Part-Whole" },
+  { name: 'rr', score: 420, index: 2, season: "winter", alph: 17, level: "Part-Whole" },
+  { name: 'bn', score: 419, index: 1, season: "winter", alph: 13, level: "Part-Whole" },
+  { name: 'my', score: 418, index: 0, season: "winter", alph: 24, level: "pre-Part-Whole" },
+  { name: 'bg', score: 475, index: 24, season: "spring", alph: 5, level: "Measurement" },
+  { name: 'jr', score: 472, index: 23, season: "spring", alph: 16, level: "Measurement" },
+  { name: 'plo', score: 472, index: 22, season: "spring", alph: 10, level: "Measurement" },
+  { name: 'rk', score: 470, index: 21, season: "spring", alph: 9, level: "Measurement" },
+  { name: 'mf', score: 466, index: 20, season: "spring", alph: 4, level: "Transition Q -> M" },
+  { name: 'vg', score: 465, index: 19, season: "spring", alph: 7, level: "Transition Q -> M" },
+  { name: 'kg', score: 464, index: 18, season: "spring", alph: 6, level: "Transition Q -> M" },
+  { name: 'rt', score: 464, index: 17, season: "spring", alph: 20, level: "Transition Q -> M" },
+  { name: 'qm', score: 460, index: 16, season: "spring", alph: 12, level: "Transition Q -> M" },
+  { name: 'zp', score: 459, index: 15, season: "spring", alph: 15, level: "Quotient" },
+  { name: 'ps', score: 457, index: 14, season: "spring", alph: 18, level: "Quotient" },
+  { name: 'ly', score: 455, index: 13, season: "spring", alph: 23, level: "Quotient" },
+  { name: 'rw', score: 453, index: 12, season: "spring", alph: 21, level: "Quotient" },
+  { name: 'ub', score: 450, index: 11, season: "spring", alph: 1, level: "Quotient" },
+  { name: 'va', score: 450, index: 10, season: "spring", alph: 0, level: "Quotient" },
+  { name: 'xd', score: 447, index: 9, season: "spring", alph: 3, level: "Transition PW -> Q" },
+  { name: 'lk', score: 444, index: 8, season: "spring", alph: 8, level: "Transition PW -> Q" },
+  { name: 'mm', score: 443, index: 7, season: "spring", alph: 11, level: "Transition PW -> Q" },
+  { name: 'gt', score: 442, index: 6, season: "spring", alph: 19, level: "Transition PW -> Q" },
+  { name: 'sw', score: 442, index: 5, season: "spring", alph: 22, level: "Transition PW -> Q" },
+  { name: 'do', score: 441, index: 4, season: "spring", alph: 14, level: "Transition PW -> Q" },
+  { name: 'tbe', score: 440, index: 3, season: "spring", alph: 2, level: "Transition PW -> Q" },
+  { name: 'rr', score: 436, index: 2, season: "spring", alph: 17, level: "Transition PW -> Q" },
+  { name: 'bn', score: 435, index: 1, season: "spring", alph: 13, level: "Transition PW -> Q" },
+  { name: 'my', score: 434, index: 0, season: "spring", alph: 24, level: "Transition PW -> Q" },
 ];
 
 const studentData = [
@@ -139,7 +141,7 @@ const studentData = [
   { name: 'G4 Spring', score: 470, index: 8, season: "spring" }
 ];
 
-const lpLevelCutoffs = [418, 430, 449, 459, 469, 481, 494]
+const lpLevelCutoffs = [419, 430, 449, 459, 469, 481, 494]
 
 // set file paths for items
 const lpLevelItems = new Map();
@@ -191,8 +193,13 @@ const renderCustomYAxisTick = ({ x, y, payload }) => {
   for(var z in lpLevels){
     if(lpLevels[z].score===payload.value){
       return (
-          <foreignObject x={x+25} y={y-40} width="120" height="50">
-            <button className="yaxisbutton" xmlns="http://www.w3.org/1999/xhtml">{lpLevels[z].level}</button>
+          <foreignObject x={x+25} y={y-40} width="150" height="50">
+          <button className="yaxisbutton" xmlns="http://www.w3.org/1999/xhtml">{lpLevels[z].level}</button>
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle" width='25' height='30' fill="black"
+            fill-opacity="0.8" stroke-opacity="0">
+            <polygon points="5,20 15,0 25,20"/>
+            <polygon points="11,20 11,30 19,30 19,20"/>
+          </svg>
           </foreignObject>
       );
     }
@@ -248,6 +255,14 @@ function Option(props)  {
       dispatch(enableAlign())
     } else{
       dispatch(disableAlign())
+    }
+  }
+
+  if(value==="scoreordering") {
+    if(isSelected){
+      dispatch(enableStudentOrdering())
+    } else{
+      dispatch(disableStudentOrdering())
     }
   }
 
@@ -390,6 +405,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         <p className="label"> Student: {dat.name}</p>
         <p className="intro">Score: {payload[1].value}</p>
         <p className="intro">Season: {dat.season}</p>
+        <p className="intro">Level: {dat.level}</p>
       </div>
     );
   }
@@ -402,6 +418,7 @@ function ScoreGridFull() {
   const growth = useSelector((state) => state.global.growth)
   const uncertainty = useSelector((state) => state.global.uncertainty)
   const graderange = useSelector((state) => state.global.graderange)
+  const studentOrdering = useSelector((state) => state.global.studentOrdering)
 
   return (
     <div>
@@ -416,15 +433,19 @@ function ScoreGridFull() {
               data={scoreData}
               margin={{ top: 20, right: 150, bottom: 30, left: 30 }}
             >
-              <CartesianGrid className="fullLPGrid" fill="url(#LPGradient)"/>
-              <XAxis type="number" tickCount={25} dataKey="index" tick={renderCustomXAxisTick}
-                label={{ value: 'Student', position: 'outsideBottom', dy: 30 }}
+            {<CartesianGrid className="fullLPGrid" vertical={false/*fill="url(#LPGradient)"*/}/>}
+              <XAxis type="number" tickCount={25} dataKey={studentOrdering ? "index" : "alph"} tick={renderCustomXAxisTick}
+                label={{ value: 'Student Initials', position: 'outsideBottom', dy: 30 }}
               />
               <YAxis yAxisId="left" dataKey="score" domain={[400, 525]} ticks = {[400, 425, 450, 475, 500, 525]}
                 label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
               />
               <Tooltip content={<CustomTooltip />}/>
               <YAxis
+                yAxisId="right-nm" orientation="right" dataKey="score" domain={[400, 525]} ticks = {lpLevelCutoffs}
+              />
+              <YAxis
+                axisLine={false}
                 data={lpLevels}
                 yAxisId="right"
                 orientation="right"
@@ -465,6 +486,7 @@ function ScoreGridFullWithItem() {
     const uncertainty = useSelector((state) => state.global.uncertainty)
     const graderange = useSelector((state) => state.global.graderange)
     const itemDisplay = useSelector((state) => state.global.itemDisplay)
+    const studentOrdering = useSelector((state) => state.global.studentOrdering)
 
     var itemPath = "";
     var levelText = "";
@@ -528,7 +550,7 @@ function ScoreGridFullWithItem() {
                 data={scoreData}
                 margin={{ top: 20, right: 90, bottom: 30, left: 30 }}
               >
-                <XAxis type="number" tickCount={25} dataKey="index" tick={renderCustomXAxisTick}
+                <XAxis type="number" tickCount={25} dataKey={studentOrdering ? "index" : "alph"} tick={renderCustomXAxisTick}
                   label={{ value: 'Student Initials', position: 'outsideBottom', dy: 30 }}
                 />
                 <YAxis yAxisId="left" dataKey="score" domain={[400, 525]} ticks = {[400, 425, 450, 475, 500, 525]}
@@ -536,10 +558,15 @@ function ScoreGridFullWithItem() {
                 />
                 <Tooltip content={<CustomTooltip />}/>
                 <YAxis
+                  yAxisId="right-nm" orientation="right" dataKey="score" domain={[400, 525]} ticks = {lpLevelCutoffs}
+                />
+                <YAxis
+                  axisLine={false}
                   data={lpLevels}
                   yAxisId="right"
                   orientation="right"
                   domain={[400, 525]}
+                  label={ {value: 'LP Level', angle: 90, position: 'insideRight', dx: 140} }
                   ticks={lpLevelCutoffs}
                   tick={renderCustomYAxisTick}
                   tickLine={false}
@@ -554,7 +581,8 @@ function ScoreGridFullWithItem() {
                   }}
                 />
                 <ZAxis  range={[90, 90]} />
-                <CartesianGrid className="fullLPGrid" fill="url(#LPGradient)"/>
+                {<CartesianGrid className="fullLPGrid" fill="url(#LPGradientGrayscale)"/>}
+                {/*<CartesianGrid className="fullLPGrid" fill="url(#LPGradient)"/>*/}
                 <ReferenceArea yAxisId="left" x1={0.01} x2={24} y1={490} y2={525} fill="gray" fillOpacity={graderange ? 0.8 : 0} />
                 <ReferenceArea yAxisId="left" x1={0.01} x2={24} y1={400} y2={440} fill="gray" fillOpacity={graderange ? 0.8 : 0} />
                 <Scatter
@@ -1013,11 +1041,21 @@ function App () { //extends React.Component {
       <div>
         <svg height={0}>
           <linearGradient id="LPGradient" gradientTransform="rotate(90)">
-            <stop offset="27%" stop-color="#A58AFF" />
+            <stop offset="18%" stop-color="#A58AFF" />
             <stop offset="42%" stop-color="#53B400" />
             <stop offset="55%" stop-color="#C49A00" />
-            <stop offset="65%" stop-color="#C49A00" />
-            <stop offset="83%" stop-color="#F8766D" />
+            <stop offset="61%" stop-color="#C49A00" />
+            <stop offset="74%" stop-color="#F8766D" />
+          </linearGradient>
+          <linearGradient id="LPGradientGrayscale" gradientTransform="rotate(90)">
+            <stop offset="20%" stop-color="#808080" />
+            <stop offset="30%" stop-color="#FFFFFF" />
+            <stop offset="40%" stop-color="#808080" />
+            <stop offset="50%" stop-color="#FFFFFF" />
+            <stop offset="57%" stop-color="#808080" />
+            <stop offset="68%" stop-color="#FFFFFF" />
+            <stop offset="80%" stop-color="#808080" />
+            <stop offset="90%" stop-color="#FFFFFF" />
           </linearGradient>
           <linearGradient id="GradeGradient" gradientTransform="rotate(90)">
             <stop offset="14%" stop-color="#A58AFF" />
