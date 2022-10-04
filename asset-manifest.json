@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/crg-prototype/static/css/main.671561c2.css",
-    "main.js": "/crg-prototype/static/js/main.fdababdb.js",
+    "main.js": "/crg-prototype/static/js/main.61c5aa62.js",
     "static/media/Quotient Item.png": "/crg-prototype/static/media/Quotient Item.41c1ba3557c2ff532bd4.png",
     "static/media/Operation Item.png": "/crg-prototype/static/media/Operation Item.79f9ff2f4cbb943554bb.png",
     "static/media/Partwhole Item.png": "/crg-prototype/static/media/Partwhole Item.b94afadbb9b41792100c.png",
-    "static/media/Fraction conceptualizations learning progression.pdf": "/crg-prototype/static/media/Fraction conceptualizations learning progression.c692a94c77a9174f97bf.pdf",
+    "static/media/Fraction conceptualizations learning progression.pdf": "/crg-prototype/static/media/Fraction conceptualizations learning progression.9324279cf1730dbc2e48.pdf",
     "static/media/Measurement Item.png": "/crg-prototype/static/media/Measurement Item.45568d0f156af155ff3d.png",
     "static/media/logo.svg": "/crg-prototype/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/crg-prototype/index.html",
     "main.671561c2.css.map": "/crg-prototype/static/css/main.671561c2.css.map",
-    "main.fdababdb.js.map": "/crg-prototype/static/js/main.fdababdb.js.map"
+    "main.61c5aa62.js.map": "/crg-prototype/static/js/main.61c5aa62.js.map"
   },
   "entrypoints": [
     "static/css/main.671561c2.css",
-    "static/js/main.fdababdb.js"
+    "static/js/main.61c5aa62.js"
   ]
 }
