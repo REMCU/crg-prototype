@@ -8,7 +8,7 @@ import store from './store'
 import {switchView, toggleItemView, enableGrowth, enableUncertainty,
 disableGrowth, disableUncertainty, enableGradeRange, disableGradeRange,
 enableStudentView, disableStudentView, enableAlign, disableAlign, enableStudentOrdering,
-disableStudentOrdering} from './stateslice'
+disableStudentOrdering, enableColor, disableColor, toggleSolution} from './stateslice'
 import {
   ScatterChart, Scatter,
   ResponsiveContainer, AreaChart, Area,
@@ -20,13 +20,18 @@ import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
 //PW
 import pwitem from './images/Partwhole Item.png';
-// Quotient
+import pwsolution from './images/solutions/Partwhole.png';
+// Fair Shares
 import qitem from './images/Quotient Item.png';
-// Measurement
+import qsolution from './images/solutions/Quotient.png';
+// Number Line
 import mitem from './images/Measurement Item.png';
-// import mfollowup from './files/followup_activities.js'
-// Operator
+import msolution from './images/solutions/Measurement.png';
+
+// Multiply & Divide
 import opitem from './images/Operation Item.png';
+import osolution from './images/solutions/Operation.png';
+
 import lpexpl from './files/Fraction conceptualizations learning progression.pdf'
 
 
@@ -36,12 +41,14 @@ const displayOptions = [
   { value: "growth", label: "Show Prior Scores" },
   { value: "uncertainty", label: "Show Score Uncertainty" },
   { value: "graderange", label: "Show Grade 4 Score Range" },
-  { value: "scoreordering", label: "Order Students by Score" }
+  { value: "scoreordering", label: "Order Students by Score" },
+  { value: "showColor", label: "Color Code Learning Progression" }
 ];
 
 const studentDisplayOptions = [
   { value: "align", label: "Align LP with Grade" },
   { value: "uncertainty", label: "Show Score Uncertainty" },
+  { value: "showColor", label: "Color Code Learning Progression" }
 ];
 
 const viewOptions = [
@@ -52,11 +59,11 @@ const viewOptions = [
 // create nine students to start
 // eventually will be filled with results from grade 2, 3, 4, fall/winter/spring
 const scoreData = [
-  { name: 'bg', score: 455, index: 24, season: "fall", alph: 5, level: "Quotient" },
+  { name: 'bg', score: 455, index: 24, season: "fall", alph: 5, level: "Fair Shares" },
   { name: 'jr', score: 447, index: 23, season: "fall", alph: 16, level: "Transition PW -> Q" },
-  { name: 'plo', score: 450, index: 22, season: "fall", alph: 10, level: "Quotient" },
-  { name: 'rk', score: 453, index: 21, season: "fall", alph: 9, level: "Quotient" },
-  { name: 'mf', score: 449, index: 20, season: "fall", alph: 4, level: "Quotient" },
+  { name: 'plo', score: 450, index: 22, season: "fall", alph: 10, level: "Fair Shares" },
+  { name: 'rk', score: 453, index: 21, season: "fall", alph: 9, level: "Fair Shares" },
+  { name: 'mf', score: 449, index: 20, season: "fall", alph: 4, level: "Fair Shares" },
   { name: 'vg', score: 435, index: 19, season: "fall", alph: 7, level: "Transition PW -> Q" },
   { name: 'kg', score: 440, index: 18, season: "fall", alph: 6, level: "Transition PW -> Q"  },
   { name: 'rt', score: 443, index: 17, season: "fall", alph: 20, level: "Transition PW -> Q"  },
@@ -77,10 +84,10 @@ const scoreData = [
   { name: 'rr', score: 422, index: 2, season: "fall", alph: 17, level: "Part-Whole" },
   { name: 'bn', score: 411, index: 1, season: "fall", alph: 13, level: "pre-Part-Whole" },
   { name: 'my', score: 414, index: 0, season: "fall", alph: 24, level: "pre-Part-Whole" },
-  { name: 'bg', score: 453, index: 24, season: "winter", alph: 5, level: "Quotient"  },
-  { name: 'jr', score: 452, index: 23, season: "winter", alph: 16, level: "Quotient" },
-  { name: 'plo', score: 455, index: 22, season: "winter", alph: 10, level: "Quotient" },
-  { name: 'rk', score: 455, index: 21, season: "winter", alph: 9, level: "Quotient" },
+  { name: 'bg', score: 453, index: 24, season: "winter", alph: 5, level: "Fair Shares"  },
+  { name: 'jr', score: 452, index: 23, season: "winter", alph: 16, level: "Fair Shares" },
+  { name: 'plo', score: 455, index: 22, season: "winter", alph: 10, level: "Fair Shares" },
+  { name: 'rk', score: 455, index: 21, season: "winter", alph: 9, level: "Fair Shares" },
   { name: 'mf', score: 447, index: 20, season: "winter", alph: 4, level: "Transition PW -> Q" },
   { name: 'vg', score: 445, index: 19, season: "winter", alph: 7, level: "Transition PW -> Q" },
   { name: 'kg', score: 442, index: 18, season: "winter", alph: 6, level: "Transition PW -> Q" },
@@ -102,21 +109,21 @@ const scoreData = [
   { name: 'rr', score: 420, index: 2, season: "winter", alph: 17, level: "Part-Whole" },
   { name: 'bn', score: 419, index: 1, season: "winter", alph: 13, level: "Part-Whole" },
   { name: 'my', score: 418, index: 0, season: "winter", alph: 24, level: "pre-Part-Whole" },
-  { name: 'bg', score: 475, index: 24, season: "spring", alph: 5, level: "Measurement" },
-  { name: 'jr', score: 472, index: 23, season: "spring", alph: 16, level: "Measurement" },
-  { name: 'plo', score: 472, index: 22, season: "spring", alph: 10, level: "Measurement" },
-  { name: 'rk', score: 470, index: 21, season: "spring", alph: 9, level: "Measurement" },
+  { name: 'bg', score: 475, index: 24, season: "spring", alph: 5, level: "Number Line" },
+  { name: 'jr', score: 472, index: 23, season: "spring", alph: 16, level: "Number Line" },
+  { name: 'plo', score: 472, index: 22, season: "spring", alph: 10, level: "Number Line" },
+  { name: 'rk', score: 470, index: 21, season: "spring", alph: 9, level: "Number Line" },
   { name: 'mf', score: 466, index: 20, season: "spring", alph: 4, level: "Transition Q -> M" },
   { name: 'vg', score: 465, index: 19, season: "spring", alph: 7, level: "Transition Q -> M" },
   { name: 'kg', score: 464, index: 18, season: "spring", alph: 6, level: "Transition Q -> M" },
   { name: 'rt', score: 464, index: 17, season: "spring", alph: 20, level: "Transition Q -> M" },
   { name: 'qm', score: 460, index: 16, season: "spring", alph: 12, level: "Transition Q -> M" },
-  { name: 'zp', score: 459, index: 15, season: "spring", alph: 15, level: "Quotient" },
-  { name: 'ps', score: 457, index: 14, season: "spring", alph: 18, level: "Quotient" },
-  { name: 'ly', score: 455, index: 13, season: "spring", alph: 23, level: "Quotient" },
-  { name: 'rw', score: 453, index: 12, season: "spring", alph: 21, level: "Quotient" },
-  { name: 'ub', score: 450, index: 11, season: "spring", alph: 1, level: "Quotient" },
-  { name: 'va', score: 450, index: 10, season: "spring", alph: 0, level: "Quotient" },
+  { name: 'zp', score: 459, index: 15, season: "spring", alph: 15, level: "Fair Shares" },
+  { name: 'ps', score: 457, index: 14, season: "spring", alph: 18, level: "Fair Shares" },
+  { name: 'ly', score: 455, index: 13, season: "spring", alph: 23, level: "Fair Shares" },
+  { name: 'rw', score: 453, index: 12, season: "spring", alph: 21, level: "Fair Shares" },
+  { name: 'ub', score: 450, index: 11, season: "spring", alph: 1, level: "Fair Shares" },
+  { name: 'va', score: 450, index: 10, season: "spring", alph: 0, level: "Fair Shares" },
   { name: 'xd', score: 447, index: 9, season: "spring", alph: 3, level: "Transition PW -> Q" },
   { name: 'lk', score: 444, index: 8, season: "spring", alph: 8, level: "Transition PW -> Q" },
   { name: 'mm', score: 443, index: 7, season: "spring", alph: 11, level: "Transition PW -> Q" },
@@ -143,22 +150,11 @@ const studentData = [
 
 const lpLevelCutoffs = [419, 430, 449, 459, 469, 481, 494]
 
-// set file paths for items
-const lpLevelItems = new Map();
-// Part-Whole
-lpLevelItems.set(418, pwitem)
-// Quotient
-lpLevelItems.set(449, qitem)
-// Measurement
-lpLevelItems.set(469, mitem)
-// Operation
-lpLevelItems.set(494, opitem)
-
 const lpLevels = [
-  { level: 'Part-Whole', score: lpLevelCutoffs[0]},
-  { level: 'Quotient', score: lpLevelCutoffs[2]},
-  { level: 'Measurement', score: lpLevelCutoffs[4]},
-  { level: 'Operator', score: lpLevelCutoffs[6]},
+  { level: 'Part-Whole', score: 424},
+  { level: 'Fair Shares', score: 454},
+  { level: 'Number Line', score: 472},
+  { level: 'Multiply & Divide', score: 500},
 
 ]
 
@@ -193,13 +189,8 @@ const renderCustomYAxisTick = ({ x, y, payload }) => {
   for(var z in lpLevels){
     if(lpLevels[z].score===payload.value){
       return (
-          <foreignObject x={x+25} y={y-40} width="150" height="50">
+          <foreignObject x={x+10} y={y-25} width="150" height="50">
           <button className="yaxisbutton" xmlns="http://www.w3.org/1999/xhtml">{lpLevels[z].level}</button>
-          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle" width='25' height='30' fill="black"
-            fill-opacity="0.8" stroke-opacity="0">
-            <polygon points="5,20 15,0 25,20"/>
-            <polygon points="11,20 11,30 19,30 19,20"/>
-          </svg>
           </foreignObject>
       );
     }
@@ -231,6 +222,14 @@ function Option(props)  {
       dispatch(enableGrowth());
     } else {
       dispatch(disableGrowth());
+    }
+  }
+
+  if(value==="showColor") {
+    if(isSelected){
+      dispatch(enableColor())
+    } else{
+      dispatch(disableColor())
     }
   }
 
@@ -305,6 +304,7 @@ class Dropdown extends React.Component {
         <ReactSelect
           options={displayOptions}
           isMulti
+          isClearable={false}
           closeMenuOnSelect={false}
           hideSelectedOptions={false}
           components={{
@@ -392,11 +392,32 @@ const CustomShape = (props) => {
    }
 };
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip_Ordered = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     var dat;
     for(var z in scoreData){
       if(scoreData[z].score===payload[1].value & scoreData[z].index === payload[0].value){
+        dat = scoreData[z];
+      }
+    }
+    return (
+      <div className="custom-tooltip">
+        <p className="label"> Student: {dat.name}</p>
+        <p className="intro">Score: {payload[1].value}</p>
+        <p className="intro">Season: {dat.season}</p>
+        <p className="intro">Level: {dat.level}</p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+const CustomTooltip_Alph = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    var dat;
+    for(var z in scoreData){
+      if(scoreData[z].score===payload[1].value & scoreData[z].alph === payload[0].value){
         dat = scoreData[z];
       }
     }
@@ -419,6 +440,7 @@ function ScoreGridFull() {
   const uncertainty = useSelector((state) => state.global.uncertainty)
   const graderange = useSelector((state) => state.global.graderange)
   const studentOrdering = useSelector((state) => state.global.studentOrdering)
+  const showColor=useSelector((state) => state.global.showColor)
 
   return (
     <div>
@@ -433,25 +455,17 @@ function ScoreGridFull() {
               data={scoreData}
               margin={{ top: 20, right: 150, bottom: 30, left: 30 }}
             >
-            {<CartesianGrid className="fullLPGrid" vertical={false/*fill="url(#LPGradient)"*/}/>}
+            {<CartesianGrid className="fullLPGrid" vertical={false} fill={showColor?"url(#LPGradient)":""}/>}
               <XAxis type="number" tickCount={25} dataKey={studentOrdering ? "index" : "alph"} tick={renderCustomXAxisTick}
                 label={{ value: 'Student Initials', position: 'outsideBottom', dy: 30 }}
               />
-              <YAxis yAxisId="left" dataKey="score" domain={[400, 525]} ticks = {[400, 425, 450, 475, 500, 525]}
-                label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
-              />
-              <Tooltip content={<CustomTooltip />}/>
               <YAxis
-                yAxisId="right-nm" orientation="right" dataKey="score" domain={[400, 525]} ticks = {lpLevelCutoffs}
-              />
-              <YAxis
-                axisLine={false}
                 data={lpLevels}
                 yAxisId="right"
                 orientation="right"
                 domain={[400, 525]}
-                label={ {value: 'LP Level', angle: 90, position: 'insideRight', dx: 140} }
-                ticks={lpLevelCutoffs}
+                label={<Label className='lpLevelLabel' angle={0} position= 'top' textAnchor="middle" dy={20} dx={55}>Understanding of LP</Label>}
+                ticks={[424, 454, 472, 500]}
                 tick={renderCustomYAxisTick}
                 tickLine={false}
                 onClick={(e) => {
@@ -464,6 +478,11 @@ function ScoreGridFull() {
                   dispatch(toggleItemView(item));
                 }}
               />
+              <YAxis yAxisId="left" dataKey="score" domain={[400, 525]} ticks = {[400, 425, 450, 475, 500, 525]}
+                label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
+                tickLine={false}
+              />
+              <Tooltip content={studentOrdering? <CustomTooltip_Ordered /> : <CustomTooltip_Alph />}/>
               <ZAxis range={[100, 100]} />
               <ReferenceArea yAxisId="left" x1={0.01} x2={24} y1={490} y2={525} fill="gray" fillOpacity={graderange ? 0.8 : 0} />
               <ReferenceArea yAxisId="left" x1={0.01} x2={24} y1={400} y2={440} fill="gray" fillOpacity={graderange ? 0.8 : 0} />
@@ -475,6 +494,13 @@ function ScoreGridFull() {
               />
             </ScatterChart>
         </ResponsiveContainer>
+        <div className="bottomArrow">
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle" width='25' height='30' fill="black"
+            fill-opacity="0.8" stroke-opacity="0">
+            <polygon points="5,20 15,0 25,20"/>
+            <polygon points="11,20 11,30 19,30 19,20"/>
+          </svg>
+        </div>
       </div>
     </div>
   );
@@ -487,25 +513,28 @@ function ScoreGridFullWithItem() {
     const graderange = useSelector((state) => state.global.graderange)
     const itemDisplay = useSelector((state) => state.global.itemDisplay)
     const studentOrdering = useSelector((state) => state.global.studentOrdering)
+    const showColor=useSelector((state) => state.global.showColor)
+    const showSolution=useSelector((state) => state.global.solution)
 
     var itemPath = "";
     var levelText = "";
     var levelName = "";
     switch (itemDisplay) {
-      case "Measurement":
-        itemPath = mitem;
-        levelName = "Level 3: Measurement";
+      case "Number Line":
+        itemPath = showSolution?msolution:mitem;
+        levelName = "Level 3: Number Line";
         levelText =  (
           <ul>
-            <li>Students understand fractions as occupying space on a number line.</li>
-            <li>Students understand that fractions have additive properties, and that the relative size of one fraction compared to the other depends on the number of times the first fits into the second.</li>
-            <li>Students can compare the size of fractions with different denominators, and perform addition/ subtraction with them.</li>
+            <li>A fraction is a real number that can be uniquely represented on a number line.</li>
+            <li>Fractional values can be converted to decimals or percentages while maintaining their numerical value:  1/5=.20=20%</li>
+            <li>Fractions with different denominators may be readily compared, added, or subtracted if they are put into the same units: 1/2−1/5=5/10−2/10=3/10</li>
+            <li>Students at this level may not understand the function and method of fraction multiplication or division.</li>
           </ul>
         );
         break;
-      case "Operator":
-        itemPath = opitem;
-        levelName = "Level 4: Operator";
+      case "Multiply & Divide":
+        itemPath = showSolution?osolution:opitem;
+        levelName = "Level 4: Multiply & Divide";
         levelText =  (
           <ul>
             <li>Students use ratios as multipliers to find a proportional amount of an original value.</li>
@@ -514,25 +543,26 @@ function ScoreGridFullWithItem() {
           </ul>
         );
         break;
-      case "Quotient":
-        itemPath = qitem;
-        levelName = "Level 2: Quotient";
+      case "Fair Shares":
+        itemPath = showSolution?qsolution:qitem;
+        levelName = "Level 2: Understand Unit Fractions (Finding Fair Shares)";
         levelText =  (
           <ul>
-            <li>Students are able to engage in equipartitioning and the creation of ‘fair shares’.</li>
-            <li>This level no longer requires students to divide one whole into parts. Students must be able to create groups of the same size and use all of the original whole.</li>
-            <li>Students begin to realize that groups of different sizes may be formed, affecting the size of each piece.</li>
+            <li>Fractional parts must be equal (“fair shares”) but may not visually appear the same (i.e., a square could be cut into diagonal 4ths or perpendicular 4ths, but still comprise 4 parts of the whole)</li>
+            <li>Unit fractions can be iterated to reproduce the original whole or part of the whole</li>
+            <li>Can provide conceptual explanation for the reasoning used to solve 1/5+3/5+1/5=?</li>
+            <li>Have operational understanding that the fraction  a/b represents the division of a by b</li>
+            <li>Students at this level may have difficulty comparing fractions with different denominators</li>
           </ul>
         );
         break;
       default:
-        itemPath = pwitem;
-        levelName = "Level 1: Part-Whole";
+        itemPath = showSolution?pwsolution:pwitem;
+        levelName = "Level 1: See Part-Whole";
         levelText =  (
           <ul>
-            <li>Students understand fractions by thinking about a whole split into equal parts.</li>
-            <li>This skill is foundational for further fraction understanding.</li>
-            <li>Students may overgeneralize whole number operations and struggle to compare or add/subtract different fractions.</li>
+            <li>A fraction represents a specified number of parts out of the total number of parts.</li>
+            <li>Students at this level may have difficulty partitioning a whole (i.e., not using all parts of a whole) and comparing fractions.</li>
           </ul>
         );
     }
@@ -548,26 +578,19 @@ function ScoreGridFullWithItem() {
                 width="100%"
                 height="100%"
                 data={scoreData}
-                margin={{ top: 20, right: 90, bottom: 30, left: 30 }}
+                margin={{ top: 20, right: 150, bottom: 30, left: 30 }}
               >
                 <XAxis type="number" tickCount={25} dataKey={studentOrdering ? "index" : "alph"} tick={renderCustomXAxisTick}
                   label={{ value: 'Student Initials', position: 'outsideBottom', dy: 30 }}
                 />
-                <YAxis yAxisId="left" dataKey="score" domain={[400, 525]} ticks = {[400, 425, 450, 475, 500, 525]}
-                  label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
-                />
-                <Tooltip content={<CustomTooltip />}/>
+
                 <YAxis
-                  yAxisId="right-nm" orientation="right" dataKey="score" domain={[400, 525]} ticks = {lpLevelCutoffs}
-                />
-                <YAxis
-                  axisLine={false}
                   data={lpLevels}
                   yAxisId="right"
                   orientation="right"
                   domain={[400, 525]}
-                  label={ {value: 'LP Level', angle: 90, position: 'insideRight', dx: 140} }
-                  ticks={lpLevelCutoffs}
+                  label={<Label className='lpLevelLabel' angle={0} position= 'top' textAnchor="middle" dy={20} dx={55}>Understanding of LP</Label>}
+                  ticks={[424, 454, 472, 500]}
                   tick={renderCustomYAxisTick}
                   tickLine={false}
                   onClick={(e) => {
@@ -580,9 +603,13 @@ function ScoreGridFullWithItem() {
                     dispatch(toggleItemView(item));
                   }}
                 />
+                <YAxis yAxisId="left" dataKey="score" domain={[400, 525]} ticks = {[400, 425, 450, 475, 500, 525]}
+                  label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
+                  tickLine={false}
+                />
+                <Tooltip content={studentOrdering? <CustomTooltip_Ordered /> : <CustomTooltip_Alph />}/>
                 <ZAxis  range={[90, 90]} />
-                {<CartesianGrid className="fullLPGrid" fill="url(#LPGradientGrayscale)"/>}
-                {/*<CartesianGrid className="fullLPGrid" fill="url(#LPGradient)"/>*/}
+                {<CartesianGrid className="fullLPGrid" fill={showColor?"url(#LPGradient)":""}/>}
                 <ReferenceArea yAxisId="left" x1={0.01} x2={24} y1={490} y2={525} fill="gray" fillOpacity={graderange ? 0.8 : 0} />
                 <ReferenceArea yAxisId="left" x1={0.01} x2={24} y1={400} y2={440} fill="gray" fillOpacity={graderange ? 0.8 : 0} />
                 <Scatter
@@ -601,7 +628,7 @@ function ScoreGridFullWithItem() {
               {levelName}
             </text>
             <br/>
-            <text>
+            <text className="levelDescriptor">
               {levelText}
             </text>
             <br/>
@@ -611,8 +638,8 @@ function ScoreGridFullWithItem() {
           </div>
           <div>
             <img class="itempng" src={itemPath} alt="Example item" width="350" />
-            <button className="linkButton" onClick={downloadTxtFile} >
-              Suggested followup activity
+            <button className="solutionButton" onClick={() => dispatch(toggleSolution())} >
+              {showSolution ? "Show example item" : "Solution"}
             </button>
           </div>
         </div>
@@ -625,6 +652,7 @@ function ScoreGridGrade() {
   const growth = useSelector((state) => state.global.growth)
   const uncertainty = useSelector((state) => state.global.uncertainty)
   const graderange = useSelector((state) => state.global.graderange)
+  const studentOrdering = useSelector((state) => state.global.studentOrdering)
 
     return (
       <div>
@@ -645,7 +673,7 @@ function ScoreGridGrade() {
                 <YAxis yAxisId="left" dataKey="score" domain={[427, 500]} ticks = {[427, 443, 460, 473, 499]}
                   label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
                 />
-                <Tooltip content={<CustomTooltip />}/>
+                <Tooltip content={studentOrdering? <CustomTooltip_Ordered /> : <CustomTooltip_Alph />}/>
                 <YAxis
                   data={grade4descriptors}
                   dataKey="score"
@@ -689,6 +717,8 @@ function ScoreGridGradeWithItem() {
   const uncertainty = useSelector((state) => state.global.uncertainty)
   const graderange = useSelector((state) => state.global.graderange)
   const itemDisplay = useSelector((state) => state.global.itemDisplay)
+  const studentOrdering = useSelector((state) => state.global.studentOrdering)
+  const showSolution=useSelector((state) => state.global.solution)
 
   return (
     <div>
@@ -709,7 +739,7 @@ function ScoreGridGradeWithItem() {
               <YAxis yAxisId="left" dataKey="score" domain={[427, 500]} ticks = {[427, 443, 460, 473, 499]}
                 label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
               />
-              <Tooltip content={<CustomTooltip />}/>
+              <Tooltip content={studentOrdering? <CustomTooltip_Ordered /> : <CustomTooltip_Alph />}/>
               <YAxis
                 data={grade4descriptors}
                 dataKey="score"
@@ -748,8 +778,8 @@ function ScoreGridGradeWithItem() {
         </div>
         <div>
           <img class="itempng" src={mitem} alt="Example item" width="300" height="150" />
-          <button className="linkButton" onClick={downloadTxtFile} >
-            Suggested followup activity
+          <button className="solutionButton" onClick={() => dispatch(toggleSolution())} >
+            {showSolution ? "Show example item" : "Solution"}
           </button>
         </div>
       </div>
@@ -762,25 +792,28 @@ function StudentView(){
   const align = useSelector((state) => state.global.align)
   const itemDisplay = useSelector((state) => state.global.itemDisplay)
   const uncertainty = useSelector((state) => state.global.uncertainty)
+  const showColor=useSelector((state) => state.global.showColor)
+  const showSolution=useSelector((state) => state.global.solution)
 
   var itemPath = "";
   var levelText = "";
   var levelName = "";
   switch (itemDisplay) {
-    case "Measurement":
-      itemPath = mitem;
-      levelName = "Level 3: Measurement";
+    case "Number Line":
+      itemPath = showSolution?msolution:mitem;
+      levelName = "Level 3: Number Line";
       levelText =  (
         <ul>
-          <li>Students understand fractions as occupying space on a number line.</li>
-          <li>Students understand that fractions have additive properties, and that the relative size of one fraction compared to the other depends on the number of times the first fits into the second.</li>
-          <li>Students can compare the size of fractions with different denominators, and perform addition/ subtraction with them.</li>
+          <li>A fraction is a real number that can be uniquely represented on a number line.</li>
+          <li>Fractional values can be converted to decimals or percentages while maintaining their numerical value:  1/5=.20=20%</li>
+          <li>Fractions with different denominators may be readily compared, added, or subtracted if they are put into the same units: 1/2−1/5=5/10−2/10=3/10</li>
+          <li>Students at this level may not understand the function and method of fraction multiplication or division.</li>
         </ul>
       );
       break;
-    case "Operator":
-      itemPath = opitem;
-      levelName = "Level 4: Operator";
+    case "Multiply & Divide":
+      itemPath = showSolution?osolution:opitem;
+      levelName = "Level 4: Multiply & Divide";
       levelText =  (
         <ul>
           <li>Students use ratios as multipliers to find a proportional amount of an original value.</li>
@@ -789,28 +822,29 @@ function StudentView(){
         </ul>
       );
       break;
-    case "Quotient":
-      itemPath = qitem;
-      levelName = "Level 2: Quotient";
+    case "Fair Shares":
+      itemPath = showSolution?qsolution:qitem;
+      levelName = "Level 2: Understand Unit Fractions (Finding Fair Shares)";
       levelText =  (
         <ul>
-          <li>Students are able to engage in equipartitioning and the creation of ‘fair shares’.</li>
-          <li>This level no longer requires students to divide one whole into parts. Students must be able to create groups of the same size and use all of the original whole.</li>
-          <li>Students begin to realize that groups of different sizes may be formed, affecting the size of each piece.</li>
+          <li>Fractional parts must be equal (“fair shares”) but may not visually appear the same (i.e., a square could be cut into diagonal 4ths or perpendicular 4ths, but still comprise 4 parts of the whole)</li>
+          <li>Unit fractions can be iterated to reproduce the original whole or part of the whole</li>
+          <li>Can provide conceptual explanation for the reasoning used to solve 1/5+3/5+1/5=?</li>
+          <li>Have operational understanding that the fraction  a/b represents the division of a by b</li>
+          <li>Students at this level may have difficulty comparing fractions with different denominators</li>
         </ul>
       );
       break;
     default:
-      itemPath = pwitem;
-      levelName = "Level 1: Part-Whole";
+      itemPath = showSolution?pwsolution:pwitem;
+      levelName = "Level 1: See Part-Whole";
       levelText =  (
         <ul>
-          <li>Students understand fractions by thinking about a whole split into equal parts.</li>
-          <li>This skill is foundational for further fraction understanding.</li>
-          <li>Students may overgeneralize whole number operations and struggle to compare or add/subtract different fractions.</li>
+          <li>A fraction represents a specified number of parts out of the total number of parts.</li>
+          <li>Students at this level may have difficulty partitioning a whole (i.e., not using all parts of a whole) and comparing fractions.</li>
         </ul>
       );
-    }
+  }
 
   const studentViewItem = (itemDisplay !== "") ? (
     <div className="itemImage">
@@ -820,7 +854,7 @@ function StudentView(){
           {levelName}
         </text>
         <br/>
-        <text>
+        <text className="levelDescriptor">
           {levelText}
         </text>
         <br/>
@@ -830,8 +864,8 @@ function StudentView(){
       </div>
       <div>
         <img class="itempng" src={itemPath} alt="Example item" width="350" />
-        <button className="linkButton" onClick={downloadTxtFile} >
-          Suggested followup activity
+        <button className="solutionButton" onClick={() => dispatch(toggleSolution())} >
+          {showSolution ? "Show example item" : "Solution"}
         </button>
       </div>
     </div>
@@ -853,17 +887,14 @@ function StudentView(){
               <XAxis type="number" tickCount={9} dataKey="index" tick={renderStudentXAxisTick}
                 label={{ value: 'Grade and Season', position: 'outsideBottom', dy: 30 }}
               />
-              <YAxis yAxisId="left" dataKey="score" domain={[400, 525]} ticks = {[400, 425, 450, 475, 500, 525]}
-                label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
-              />
               <YAxis
                 data={lpLevels}
                 yAxisId="right"
                 orientation="right"
                 domain={[400, 525]}
-                ticks={lpLevelCutoffs}
+                label={<Label className='lpLevelLabel' angle={0} position= 'top' textAnchor="middle" dy={20} dx={55}>Understanding of LP</Label>}
+                ticks={[424, 454, 472, 500]}
                 tick={renderCustomYAxisTick}
-                label={ {value: 'LP Level', angle: 90, position: 'insideRight', dx: 140} }
                 tickLine={false}
                 onClick={(e) => {
                   var item = "";
@@ -875,8 +906,11 @@ function StudentView(){
                   dispatch(toggleItemView(item));
                 }}
               />
+              <YAxis yAxisId="left" dataKey="score" domain={[400, 525]} ticks = {[400, 425, 450, 475, 500, 525]}
+                label={{ value: 'i-Ready scale score', angle: -90, position: 'insideLeft' }}
+              />
               <ZAxis range={[100, 100]} />
-              <CartesianGrid className="fullLPGrid" fill="url(#LPGradient)"/>
+              <CartesianGrid className="fullLPGrid" fill={showColor?"url(#LPGradient)":""}/>
               <ReferenceArea yAxisId="left" x1={0} x2={2} y1={425} y2={525} fill="gray" fillOpacity={align ? 0.8 : 0} />
               <ReferenceArea yAxisId="left" x1={2} x2={5} y1={470} y2={525} fill="gray" fillOpacity={align ? 0.8 : 0} />
               <ReferenceArea yAxisId="left" x1={5} x2={8} y1={400} y2={460} fill="gray" fillOpacity={align ? 0.8 : 0} />
@@ -888,6 +922,13 @@ function StudentView(){
               />
             </ScatterChart>
         </ResponsiveContainer>
+        <div className="bottomArrow">
+          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle" width='25' height='30' fill="black"
+            fill-opacity="0.8" stroke-opacity="0">
+            <polygon points="5,20 15,0 25,20"/>
+            <polygon points="11,20 11,30 19,30 19,20"/>
+          </svg>
+        </div>
       </div>
       {studentViewItem}
     </div>
@@ -1041,21 +1082,10 @@ function App () { //extends React.Component {
       <div>
         <svg height={0}>
           <linearGradient id="LPGradient" gradientTransform="rotate(90)">
-            <stop offset="18%" stop-color="#A58AFF" />
-            <stop offset="42%" stop-color="#53B400" />
-            <stop offset="55%" stop-color="#C49A00" />
-            <stop offset="61%" stop-color="#C49A00" />
-            <stop offset="74%" stop-color="#F8766D" />
-          </linearGradient>
-          <linearGradient id="LPGradientGrayscale" gradientTransform="rotate(90)">
-            <stop offset="20%" stop-color="#808080" />
-            <stop offset="30%" stop-color="#FFFFFF" />
-            <stop offset="40%" stop-color="#808080" />
-            <stop offset="50%" stop-color="#FFFFFF" />
-            <stop offset="57%" stop-color="#808080" />
-            <stop offset="68%" stop-color="#FFFFFF" />
-            <stop offset="80%" stop-color="#808080" />
-            <stop offset="90%" stop-color="#FFFFFF" />
+            <stop offset="18%" stop-color="#B100CD" />
+            <stop offset="40%" stop-color="#FFE800" />
+            <stop offset="58%" stop-color="#0200C6" />
+            <stop offset="77%" stop-color="#FF8B00" />
           </linearGradient>
           <linearGradient id="GradeGradient" gradientTransform="rotate(90)">
             <stop offset="14%" stop-color="#A58AFF" />

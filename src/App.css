@@ -62,7 +62,7 @@
     text-align: center;
 }
 
-.linkButton{
+.solutionButton{
   width: 150px;
   position: absolute;
   right: 80px;
@@ -126,4 +126,19 @@ button {
 li {
   padding: 5px;
   margin-left: 5px;
+}
+
+.bottomArrow{
+  position: relative;
+  left: 1250px;
+  bottom:350px;
+}
+
+.lpLevelLabel{
+  font-weight: bold;
+}
+
+.levelDescriptor{
+  text-align: justify;
+  font-size: 10pt;
 }
