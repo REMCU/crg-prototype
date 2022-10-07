@@ -1,19 +1,23 @@
 {
   "files": {
-    "main.css": "/crg-prototype/static/css/main.671561c2.css",
-    "main.js": "/crg-prototype/static/js/main.61c5aa62.js",
+    "main.css": "/crg-prototype/static/css/main.444b956a.css",
+    "main.js": "/crg-prototype/static/js/main.1e6c14b3.js",
     "static/media/Quotient Item.png": "/crg-prototype/static/media/Quotient Item.41c1ba3557c2ff532bd4.png",
     "static/media/Operation Item.png": "/crg-prototype/static/media/Operation Item.79f9ff2f4cbb943554bb.png",
     "static/media/Partwhole Item.png": "/crg-prototype/static/media/Partwhole Item.b94afadbb9b41792100c.png",
-    "static/media/Fraction conceptualizations learning progression.pdf": "/crg-prototype/static/media/Fraction conceptualizations learning progression.9324279cf1730dbc2e48.pdf",
+    "static/media/Fraction conceptualizations learning progression.pdf": "/crg-prototype/static/media/Fraction conceptualizations learning progression.b139b36fc1a5a5a0762b.pdf",
+    "static/media/Quotient.png": "/crg-prototype/static/media/Quotient.cec37baeea1f56d7ad7b.png",
+    "static/media/Measurement.png": "/crg-prototype/static/media/Measurement.7e5e3df695fafbaff4c0.png",
+    "static/media/Partwhole.png": "/crg-prototype/static/media/Partwhole.f3604cfd983935019cdc.png",
+    "static/media/Operation.png": "/crg-prototype/static/media/Operation.18c1aadda3a9c80b1684.png",
     "static/media/Measurement Item.png": "/crg-prototype/static/media/Measurement Item.45568d0f156af155ff3d.png",
     "static/media/logo.svg": "/crg-prototype/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/crg-prototype/index.html",
-    "main.671561c2.css.map": "/crg-prototype/static/css/main.671561c2.css.map",
-    "main.61c5aa62.js.map": "/crg-prototype/static/js/main.61c5aa62.js.map"
+    "main.444b956a.css.map": "/crg-prototype/static/css/main.444b956a.css.map",
+    "main.1e6c14b3.js.map": "/crg-prototype/static/js/main.1e6c14b3.js.map"
   },
   "entrypoints": [
-    "static/css/main.671561c2.css",
-    "static/js/main.61c5aa62.js"
+    "static/css/main.444b956a.css",
+    "static/js/main.1e6c14b3.js"
   ]
 }
