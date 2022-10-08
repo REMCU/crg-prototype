@@ -168,9 +168,22 @@ const grade4descriptors = [
 
 const grade4cutoffs = [427, 443, 460, 473, 499]
 
-const renderCustomXAxisTick = ({ x, y, payload }) => {
+const renderOrderedXAxisTick = ({ x, y, payload }) => {
   // get name to render from scoreData
-  var dat = scoreData[payload.value];
+  var d = scoreData.slice(0, 25)
+  var sorted = d.sort((a, b) => (a.index > b.index) ? 1 : -1)
+  var dat = sorted[payload.value];
+  var name = dat.name
+  return (
+    <text x={x} y={y+20} fill="#666" textAnchor="middle"> {name} </text>
+  );
+};
+
+const renderAlphXAxisTick = ({ x, y, payload }) => {
+  // get name to render from scoreData
+  var d = scoreData.slice(0, 25)
+  var sorted = d.sort((a, b) => (a.alph > b.alph) ? 1 : -1)
+  var dat = sorted[payload.value];
   var name = dat.name
   return (
     <text x={x} y={y+20} fill="#666" textAnchor="middle"> {name} </text>
@@ -456,7 +469,7 @@ function ScoreGridFull() {
               margin={{ top: 20, right: 150, bottom: 30, left: 30 }}
             >
             {<CartesianGrid className="fullLPGrid" vertical={false} fill={showColor?"url(#LPGradient)":""}/>}
-              <XAxis type="number" tickCount={25} dataKey={studentOrdering ? "index" : "alph"} tick={renderCustomXAxisTick}
+              <XAxis type="number" tickCount={25} dataKey={studentOrdering ? "index" : "alph"} tick={studentOrdering?renderOrderedXAxisTick:renderAlphXAxisTick}
                 label={{ value: 'Student Initials', position: 'outsideBottom', dy: 30 }}
               />
               <YAxis
@@ -580,7 +593,7 @@ function ScoreGridFullWithItem() {
                 data={scoreData}
                 margin={{ top: 20, right: 150, bottom: 30, left: 30 }}
               >
-                <XAxis type="number" tickCount={25} dataKey={studentOrdering ? "index" : "alph"} tick={renderCustomXAxisTick}
+                <XAxis type="number" tickCount={25} dataKey={studentOrdering ? "index" : "alph"} tick={studentOrdering?renderOrderedXAxisTick:renderAlphXAxisTick}
                   label={{ value: 'Student Initials', position: 'outsideBottom', dy: 30 }}
                 />
 
@@ -667,7 +680,7 @@ function ScoreGridGrade() {
                 data={scoreData}
                 margin={{ top: 20, right: 150, bottom: 30, left: 30 }}
               >
-                <XAxis type="number" tickCount={25} dataKey="index" tick={renderCustomXAxisTick}
+                <XAxis type="number" tickCount={25} dataKey="index" tick={studentOrdering?renderOrderedXAxisTick:renderAlphXAxisTick}
                   label={{ value: 'Student Initials', position: 'outsideBottom', dy: 30 }}
                 />
                 <YAxis yAxisId="left" dataKey="score" domain={[427, 500]} ticks = {[427, 443, 460, 473, 499]}
@@ -733,7 +746,7 @@ function ScoreGridGradeWithItem() {
               data={scoreData}
               margin={{ top: 20, right: 90, bottom: 30, left: 30 }}
             >
-              <XAxis type="number" tickCount={25} dataKey="index" tick={renderCustomXAxisTick}
+              <XAxis type="number" tickCount={25} dataKey="index" tick={studentOrdering?renderOrderedXAxisTick:renderAlphXAxisTick}
                 label={{ value: 'Student Initials', position: 'outsideBottom', dy: 30 }}
               />
               <YAxis yAxisId="left" dataKey="score" domain={[427, 500]} ticks = {[427, 443, 460, 473, 499]}
