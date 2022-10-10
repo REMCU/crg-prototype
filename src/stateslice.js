@@ -25,6 +25,7 @@ export const stateSlice = createSlice({
       state.itemDisplay = ""
     },
     toggleItemView: (state, action) => {
+      state.solution = false
       if(action.payload===state.itemDisplay){
         state.itemDisplay = ""
       } else{

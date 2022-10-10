@@ -60,20 +60,20 @@ const viewOptions = [
 // eventually will be filled with results from grade 2, 3, 4, fall/winter/spring
 const scoreData = [
   { name: 'bg', score: 455, index: 24, season: "fall", alph: 5, level: "Fair Shares" },
-  { name: 'jr', score: 447, index: 23, season: "fall", alph: 16, level: "Transition PW -> Q" },
+  { name: 'jr', score: 447, index: 23, season: "fall", alph: 16, level: "Transition PW -> FS" },
   { name: 'plo', score: 450, index: 22, season: "fall", alph: 10, level: "Fair Shares" },
   { name: 'rk', score: 453, index: 21, season: "fall", alph: 9, level: "Fair Shares" },
   { name: 'mf', score: 449, index: 20, season: "fall", alph: 4, level: "Fair Shares" },
-  { name: 'vg', score: 435, index: 19, season: "fall", alph: 7, level: "Transition PW -> Q" },
-  { name: 'kg', score: 440, index: 18, season: "fall", alph: 6, level: "Transition PW -> Q"  },
-  { name: 'rt', score: 443, index: 17, season: "fall", alph: 20, level: "Transition PW -> Q"  },
-  { name: 'qm', score: 437, index: 16, season: "fall", alph: 12, level: "Transition PW -> Q"  },
-  { name: 'zp', score: 436, index: 15, season: "fall", alph: 15, level: "Transition PW -> Q"  },
-  { name: 'ps', score: 441, index: 14, season: "fall", alph: 18, level: "Transition PW -> Q"  },
-  { name: 'ly', score: 440, index: 13, season: "fall", alph: 23, level: "Transition PW -> Q"  },
+  { name: 'vg', score: 435, index: 19, season: "fall", alph: 7, level: "Transition PW -> FS" },
+  { name: 'kg', score: 440, index: 18, season: "fall", alph: 6, level: "Transition PW -> FS"  },
+  { name: 'rt', score: 443, index: 17, season: "fall", alph: 20, level: "Transition PW -> FS"  },
+  { name: 'qm', score: 437, index: 16, season: "fall", alph: 12, level: "Transition PW -> FS"  },
+  { name: 'zp', score: 436, index: 15, season: "fall", alph: 15, level: "Transition PW -> FS"  },
+  { name: 'ps', score: 441, index: 14, season: "fall", alph: 18, level: "Transition PW -> FS"  },
+  { name: 'ly', score: 440, index: 13, season: "fall", alph: 23, level: "Transition PW -> FS"  },
   { name: 'rw', score: 430, index: 12, season: "fall", alph: 21, level: "Part-Whole" },
   { name: 'ub', score: 430, index: 11, season: "fall", alph: 1, level: "Part-Whole" },
-  { name: 'va', score: 432, index: 10, season: "fall", alph: 0, level: "Transition PW -> Q" },
+  { name: 'va', score: 432, index: 10, season: "fall", alph: 0, level: "Transition PW -> FS" },
   { name: 'xd', score: 423, index: 9, season: "fall", alph: 3, level: "Part-Whole" },
   { name: 'lk', score: 426, index: 8, season: "fall", alph: 8, level: "Part-Whole" },
   { name: 'mm', score: 427, index: 7, season: "fall", alph: 11, level: "Part-Whole" },
@@ -88,17 +88,17 @@ const scoreData = [
   { name: 'jr', score: 452, index: 23, season: "winter", alph: 16, level: "Fair Shares" },
   { name: 'plo', score: 455, index: 22, season: "winter", alph: 10, level: "Fair Shares" },
   { name: 'rk', score: 455, index: 21, season: "winter", alph: 9, level: "Fair Shares" },
-  { name: 'mf', score: 447, index: 20, season: "winter", alph: 4, level: "Transition PW -> Q" },
-  { name: 'vg', score: 445, index: 19, season: "winter", alph: 7, level: "Transition PW -> Q" },
-  { name: 'kg', score: 442, index: 18, season: "winter", alph: 6, level: "Transition PW -> Q" },
-  { name: 'rt', score: 448, index: 17, season: "winter", alph: 20, level: "Transition PW -> Q" },
-  { name: 'qm', score: 440, index: 16, season: "winter", alph: 12, level: "Transition PW -> Q" },
-  { name: 'zp', score: 441, index: 15, season: "winter", alph: 15, level: "Transition PW -> Q" },
-  { name: 'ps', score: 443, index: 14, season: "winter", alph: 18, level: "Transition PW -> Q" },
-  { name: 'ly', score: 444, index: 13, season: "winter", alph: 23, level: "Transition PW -> Q" },
-  { name: 'rw', score: 437, index: 12, season: "winter", alph: 21, level: "Transition PW -> Q" },
-  { name: 'ub', score: 437, index: 11, season: "winter", alph: 1, level: "Transition PW -> Q" },
-  { name: 'va', score: 434, index: 10, season: "winter", alph: 0, level: "Transition PW -> Q" },
+  { name: 'mf', score: 447, index: 20, season: "winter", alph: 4, level: "Transition PW -> FS" },
+  { name: 'vg', score: 445, index: 19, season: "winter", alph: 7, level: "Transition PW -> FS" },
+  { name: 'kg', score: 442, index: 18, season: "winter", alph: 6, level: "Transition PW -> FS" },
+  { name: 'rt', score: 448, index: 17, season: "winter", alph: 20, level: "Transition PW -> FS" },
+  { name: 'qm', score: 440, index: 16, season: "winter", alph: 12, level: "Transition PW -> FS" },
+  { name: 'zp', score: 441, index: 15, season: "winter", alph: 15, level: "Transition PW -> FS" },
+  { name: 'ps', score: 443, index: 14, season: "winter", alph: 18, level: "Transition PW -> FS" },
+  { name: 'ly', score: 444, index: 13, season: "winter", alph: 23, level: "Transition PW -> FS" },
+  { name: 'rw', score: 437, index: 12, season: "winter", alph: 21, level: "Transition PW -> FS" },
+  { name: 'ub', score: 437, index: 11, season: "winter", alph: 1, level: "Transition PW -> FS" },
+  { name: 'va', score: 434, index: 10, season: "winter", alph: 0, level: "Transition PW -> FS" },
   { name: 'xd', score: 428, index: 9, season: "winter", alph: 3, level: "Part-Whole" },
   { name: 'lk', score: 430, index: 8, season: "winter", alph: 8, level: "Part-Whole" },
   { name: 'mm', score: 429, index: 7, season: "winter", alph: 11, level: "Part-Whole" },
@@ -113,27 +113,27 @@ const scoreData = [
   { name: 'jr', score: 472, index: 23, season: "spring", alph: 16, level: "Number Line" },
   { name: 'plo', score: 472, index: 22, season: "spring", alph: 10, level: "Number Line" },
   { name: 'rk', score: 470, index: 21, season: "spring", alph: 9, level: "Number Line" },
-  { name: 'mf', score: 466, index: 20, season: "spring", alph: 4, level: "Transition Q -> M" },
-  { name: 'vg', score: 465, index: 19, season: "spring", alph: 7, level: "Transition Q -> M" },
-  { name: 'kg', score: 464, index: 18, season: "spring", alph: 6, level: "Transition Q -> M" },
-  { name: 'rt', score: 464, index: 17, season: "spring", alph: 20, level: "Transition Q -> M" },
-  { name: 'qm', score: 460, index: 16, season: "spring", alph: 12, level: "Transition Q -> M" },
+  { name: 'mf', score: 466, index: 20, season: "spring", alph: 4, level: "Transition FS -> NL" },
+  { name: 'vg', score: 465, index: 19, season: "spring", alph: 7, level: "Transition FS -> NL" },
+  { name: 'kg', score: 464, index: 18, season: "spring", alph: 6, level: "Transition FS -> NL" },
+  { name: 'rt', score: 464, index: 17, season: "spring", alph: 20, level: "Transition FS -> NL" },
+  { name: 'qm', score: 460, index: 16, season: "spring", alph: 12, level: "Transition FS -> NL" },
   { name: 'zp', score: 459, index: 15, season: "spring", alph: 15, level: "Fair Shares" },
   { name: 'ps', score: 457, index: 14, season: "spring", alph: 18, level: "Fair Shares" },
   { name: 'ly', score: 455, index: 13, season: "spring", alph: 23, level: "Fair Shares" },
   { name: 'rw', score: 453, index: 12, season: "spring", alph: 21, level: "Fair Shares" },
   { name: 'ub', score: 450, index: 11, season: "spring", alph: 1, level: "Fair Shares" },
   { name: 'va', score: 450, index: 10, season: "spring", alph: 0, level: "Fair Shares" },
-  { name: 'xd', score: 447, index: 9, season: "spring", alph: 3, level: "Transition PW -> Q" },
-  { name: 'lk', score: 444, index: 8, season: "spring", alph: 8, level: "Transition PW -> Q" },
-  { name: 'mm', score: 443, index: 7, season: "spring", alph: 11, level: "Transition PW -> Q" },
-  { name: 'gt', score: 442, index: 6, season: "spring", alph: 19, level: "Transition PW -> Q" },
-  { name: 'sw', score: 442, index: 5, season: "spring", alph: 22, level: "Transition PW -> Q" },
-  { name: 'do', score: 441, index: 4, season: "spring", alph: 14, level: "Transition PW -> Q" },
-  { name: 'tbe', score: 440, index: 3, season: "spring", alph: 2, level: "Transition PW -> Q" },
-  { name: 'rr', score: 436, index: 2, season: "spring", alph: 17, level: "Transition PW -> Q" },
-  { name: 'bn', score: 435, index: 1, season: "spring", alph: 13, level: "Transition PW -> Q" },
-  { name: 'my', score: 434, index: 0, season: "spring", alph: 24, level: "Transition PW -> Q" },
+  { name: 'xd', score: 447, index: 9, season: "spring", alph: 3, level: "Transition PW -> FS" },
+  { name: 'lk', score: 444, index: 8, season: "spring", alph: 8, level: "Transition PW -> FS" },
+  { name: 'mm', score: 443, index: 7, season: "spring", alph: 11, level: "Transition PW -> FS" },
+  { name: 'gt', score: 442, index: 6, season: "spring", alph: 19, level: "Transition PW -> FS" },
+  { name: 'sw', score: 442, index: 5, season: "spring", alph: 22, level: "Transition PW -> FS" },
+  { name: 'do', score: 441, index: 4, season: "spring", alph: 14, level: "Transition PW -> FS" },
+  { name: 'tbe', score: 440, index: 3, season: "spring", alph: 2, level: "Transition PW -> FS" },
+  { name: 'rr', score: 436, index: 2, season: "spring", alph: 17, level: "Transition PW -> FS" },
+  { name: 'bn', score: 435, index: 1, season: "spring", alph: 13, level: "Transition PW -> FS" },
+  { name: 'my', score: 434, index: 0, season: "spring", alph: 24, level: "Transition PW -> FS" },
 ];
 
 const studentData = [
@@ -935,13 +935,15 @@ function StudentView(){
               />
             </ScatterChart>
         </ResponsiveContainer>
+        {(itemDisplay === "") ?
         <div className="bottomArrow">
           <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle" width='25' height='30' fill="black"
             fill-opacity="0.8" stroke-opacity="0">
             <polygon points="5,20 15,0 25,20"/>
             <polygon points="11,20 11,30 19,30 19,20"/>
           </svg>
-        </div>
+        </div> : <div />
+      }
       </div>
       {studentViewItem}
     </div>
