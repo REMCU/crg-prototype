@@ -14,7 +14,7 @@ import {
   ResponsiveContainer, AreaChart, Area,
   XAxis, YAxis, ZAxis, ReferenceLine,
   CartesianGrid, CartesianAxis, Label,
-  ReferenceArea, Tooltip
+  ReferenceArea, Tooltip, Text
 } from 'recharts';
 import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
@@ -208,6 +208,22 @@ const renderCustomYAxisTick = ({ x, y, payload }) => {
       );
     }
   }
+};
+
+const CustomYAxisLabel = ({ viewBox }) => {
+    return (
+        <Text
+          className='lpLevelLabel'
+          x={viewBox['x']}
+          y={viewBox['y']}
+          dx={70}
+          dy={40}
+          textAnchor="middle"
+          width={50}
+        >
+          Understanding of Fractions
+        </Text>
+    );
 };
 
 const renderGradeYAxisTick = ({ x, y, payload }) => {
@@ -477,7 +493,7 @@ function ScoreGridFull() {
                 yAxisId="right"
                 orientation="right"
                 domain={[400, 525]}
-                label={<Label className='lpLevelLabel' angle={0} position= 'top' textAnchor="middle" dy={20} dx={55}>Understanding of LP</Label>}
+                label={<CustomYAxisLabel />}
                 ticks={[424, 454, 472, 500]}
                 tick={renderCustomYAxisTick}
                 tickLine={false}
@@ -602,7 +618,7 @@ function ScoreGridFullWithItem() {
                   yAxisId="right"
                   orientation="right"
                   domain={[400, 525]}
-                  label={<Label className='lpLevelLabel' angle={0} position= 'top' textAnchor="middle" dy={20} dx={55}>Understanding of LP</Label>}
+                  label={<CustomYAxisLabel />}
                   ticks={[424, 454, 472, 500]}
                   tick={renderCustomYAxisTick}
                   tickLine={false}
@@ -904,8 +920,8 @@ function StudentView(){
                 data={lpLevels}
                 yAxisId="right"
                 orientation="right"
-                domain={[400, 525]}
-                label={<Label className='lpLevelLabel' angle={0} position= 'top' textAnchor="middle" dy={20} dx={55}>Understanding of LP</Label>}
+                domain={[400, 525]}                
+                label={<CustomYAxisLabel />}
                 ticks={[424, 454, 472, 500]}
                 tick={renderCustomYAxisTick}
                 tickLine={false}
