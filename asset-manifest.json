@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/crg-prototype/static/css/main.444b956a.css",
-    "main.js": "/crg-prototype/static/js/main.c14d42d5.js",
+    "main.js": "/crg-prototype/static/js/main.4a110d12.js",
     "static/media/Quotient Item.png": "/crg-prototype/static/media/Quotient Item.41c1ba3557c2ff532bd4.png",
     "static/media/Operation Item.png": "/crg-prototype/static/media/Operation Item.79f9ff2f4cbb943554bb.png",
     "static/media/Partwhole Item.png": "/crg-prototype/static/media/Partwhole Item.b94afadbb9b41792100c.png",
@@ -14,10 +14,10 @@
     "static/media/logo.svg": "/crg-prototype/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/crg-prototype/index.html",
     "main.444b956a.css.map": "/crg-prototype/static/css/main.444b956a.css.map",
-    "main.c14d42d5.js.map": "/crg-prototype/static/js/main.c14d42d5.js.map"
+    "main.4a110d12.js.map": "/crg-prototype/static/js/main.4a110d12.js.map"
   },
   "entrypoints": [
     "static/css/main.444b956a.css",
-    "static/js/main.c14d42d5.js"
+    "static/js/main.4a110d12.js"
   ]
 }
