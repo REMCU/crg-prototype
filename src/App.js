@@ -14,7 +14,7 @@ import {
   ResponsiveContainer, AreaChart, Area,
   XAxis, YAxis, ZAxis, ReferenceLine,
   CartesianGrid, CartesianAxis, Label,
-  ReferenceArea, Tooltip, Text
+  ReferenceArea, Tooltip, Text, Line, LineChart
 } from 'recharts';
 import { default as ReactSelect } from "react-select";
 import { components } from "react-select";
@@ -388,7 +388,8 @@ class StudentDropdown extends React.Component {
 }
 
 const CustomShape = (props) => {
-  const {cx, cy, season, growth, uncertainty} = props;
+  const {cx, cy, payload, growth, uncertainty} = props;
+  var season = payload.season
   var f = "#97E909"
   var vis = "visible"
 
@@ -907,7 +908,7 @@ function StudentView(){
       </div>
       <div className="grid">
         <ResponsiveContainer classname="sgf" width={(itemDisplay!=="")?900:1300} height={600}>
-            <ScatterChart
+            <LineChart
               width="100%"
               height="100%"
               data={studentData}
@@ -920,7 +921,7 @@ function StudentView(){
                 data={lpLevels}
                 yAxisId="right"
                 orientation="right"
-                domain={[400, 525]}                
+                domain={[400, 525]}
                 label={<CustomYAxisLabel />}
                 ticks={[424, 454, 472, 500]}
                 tick={renderCustomYAxisTick}
@@ -944,12 +945,13 @@ function StudentView(){
               <ReferenceArea yAxisId="left" x1={2} x2={5} y1={470} y2={525} fill="gray" fillOpacity={align ? 0.8 : 0} />
               <ReferenceArea yAxisId="left" x1={5} x2={8} y1={400} y2={460} fill="gray" fillOpacity={align ? 0.8 : 0} />
               <ReferenceArea yAxisId="left" x1={5} x2={8} y1={500} y2={525} fill="gray" fillOpacity={align ? 0.8 : 0} />
-              <Scatter
+              <Line
                 yAxisId="left"
-                data={studentData}
-                shape={<CustomShape growth={true} uncertainty={uncertainty} />}
+                dataKey="score"
+                stroke="#808080"
+                dot={<CustomShape growth={true} uncertainty={uncertainty}/>}
               />
-            </ScatterChart>
+            </LineChart>
         </ResponsiveContainer>
         {(itemDisplay === "") ?
         <div className="bottomArrow">
